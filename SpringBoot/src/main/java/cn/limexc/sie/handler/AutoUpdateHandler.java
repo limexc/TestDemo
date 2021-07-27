@@ -23,8 +23,8 @@ public class AutoUpdateHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");
-        // 起始版本 3.3.0(推荐使用)
-        this.strictInsertFill(metaObject, "creationDate", Date.class, new Date());
+        // 起始版本 3.3.0(推荐使用)  有问题，还未改
+        this.strictInsertFill(metaObject, "creation_date", Date.class, new Date());
 
     }
 
@@ -32,6 +32,6 @@ public class AutoUpdateHandler implements MetaObjectHandler {
     public void updateFill(MetaObject metaObject) {
         log.info("start update fill ....");
         // 起始版本 3.3.0(推荐)LocalDateTime.class, LocalDateTime.now()
-        this.strictUpdateFill(metaObject, "lastUpdatedDate", Date.class, new Date());
+        this.strictUpdateFill(metaObject, "last_updated_date", Date.class, new Date());
     }
 }
