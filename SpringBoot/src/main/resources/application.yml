@@ -1,0 +1,72 @@
+server:
+  port: 8081
+spring:
+  #环境设置：dev test prod
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+#   数据源基本配置
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: apps
+    password: oracle123
+    url: jdbc:oracle:thin:@127.0.0.1:1521:xe
+    type: com.alibaba.druid.pool.DruidDataSource
+#   数据源其他配置
+    druid:
+      initialsize: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      #配置监控统计拦截的filters，去掉后监控界面sql无法统计 wall用于防火墙
+      filters: stat,wall,log4j
+      max-pool-prepared-statement-per-connection-size: 20
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      use-global-data-source-stat: true
+      #schema:
+        #- classpath: sql/****
+        #- classpath: sql/***
+#  thymeleaf:
+#    encoding: UTF-8
+#    prefix: classpath:/templates/
+#    suffix: .html
+#    cache: false
+# 使用mybatis操作数据库配置以下内容
+mybatis-plus:
+  #type-aliases-package: com.wang.mybatis.dao  #可以添加此属性
+  # 指定全局配置文件位置
+  #config-location: classpath:mapper/mybatis-config.xml
+  # *.xml文件路径在java包下时，不可使用mybatis.mapper-locations配置
+  #mapper-locations: classpath:mapper/*.xml # 指定配置sql文件的位置
+  type-aliases-package: cn.limexc.sie.entity   #别名
+  configuration:
+    map-underscore-to-camel-case: true
+    #日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: input
+      capital-mode: true
+      #logic-delete-field: flag  # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: Y # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: N # 逻辑未删除值(默认为 0)
+pagehelper:
+  helper-dialect: Oracle # 指定数据库类型
+  reasonable: true
+  offset-as-page-num: true
+  row-bounds-with-count: true
+  properties: properties
+  page-size-zero: true
+#好像不能用？
+logging:
+  level:
+    com.baomidou.samples.metainfo: debug

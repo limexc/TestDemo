@@ -1,0 +1,32 @@
+package cn.limexc.sie.config;
+
+
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.incrementer.OracleKeyGenerator;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * @Description [类说明]
+ * @Version 0.0.1
+ * @Email zhiyuanxzy@gmail.com
+ * @Author ADMIN
+ * @Create 2021/7/27 16:00
+ */
+@Configuration
+@MapperScan("cn.limexc.sie.mapper")
+public class MybatisPlusConfig {
+
+    /**
+     * oracle主键序列自增
+     * @return
+     */
+    @Bean
+    public OracleKeyGenerator oracleKeyGenerator(){
+        return new OracleKeyGenerator();
+    }
+
+
+
+}
