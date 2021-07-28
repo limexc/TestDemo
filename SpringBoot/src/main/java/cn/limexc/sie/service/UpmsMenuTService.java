@@ -1,6 +1,7 @@
 package cn.limexc.sie.service;
 
 import cn.limexc.sie.entity.UpmsMenuT;
+import cn.limexc.sie.mapper.UpmsMenuTMapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 
@@ -14,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UpmsMenuTService extends IService<UpmsMenuT> {
 
+    boolean addMenu(UpmsMenuT upmsMenuT);
 }

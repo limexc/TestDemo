@@ -21,6 +21,7 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
+@KeySequence(value = "UPMS_ROFU_S")
 @TableName("UPMS_ROFU_T")
 public class UpmsRofuT extends Model<UpmsRofuT> {
 
@@ -29,18 +30,18 @@ public class UpmsRofuT extends Model<UpmsRofuT> {
     /**
      * 用户角色表ID
      */
-    @TableId(value = "ROFU_ID", type = IdType.ID_WORKER)
-    private Double rofuId;
+    @TableId(value = "ROFU_ID", type = IdType.INPUT)
+    private Integer rofuId;
     /**
      * 用户ID
      */
     @TableField("ROFU_USERID")
-    private Double rofuUserid;
+    private Integer rofuUserid;
     /**
      * 权限表ID
      */
     @TableField("ROFU_AUTHID")
-    private Double rofuAuthid;
+    private Integer rofuAuthid;
     /**
      * 备注
      */

@@ -4,11 +4,13 @@ package cn.limexc.sie.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.ibatis.type.JdbcType;
 
 import java.io.Serializable;
+import java.sql.JDBCType;
 import java.util.Date;
 
 /**
@@ -20,6 +22,7 @@ import java.util.Date;
  * @since 2021-07-27
  */
 @Data
+@KeySequence(value = "UPMS_AUTH_S")
 @Accessors(chain = true)
 @TableName("UPMS_AUTH_T")
 public class UpmsAuthT extends Model<UpmsAuthT> {
@@ -29,20 +32,21 @@ public class UpmsAuthT extends Model<UpmsAuthT> {
     /**
      * 表ID
      */
-    @TableId(value = "AUTH_ID", type = IdType.ID_WORKER)
-    private Double authId;
+    @ApiModelProperty(value = "表ID",example = "1")
+    @TableId(value = "AUTH_ID", type = IdType.INPUT)
+    private Integer authId;
     /**
      * 菜单表id
      */
-    @TableField("AUTH_MENUID")
-    private Double authMenuid;
+    @TableField(value = "AUTH_MENUID",jdbcType = JdbcType.INTEGER)
+    private Integer authMenuid;
     /**
      * 权限名
      */
-    @TableField("AUTH_NAME")
+    @TableField(value = "AUTH_NAME",jdbcType = JdbcType.VARCHAR)
     private String authName;
     @ApiModelProperty(value = "创建者id",example = "1")
-    @TableField(value = "CREATED_BY")
+    @TableField(value = "CREATED_BY",jdbcType = JdbcType.INTEGER)
     private Integer createdBy;
 
     //@TableField("CREATION_DATE")
@@ -50,7 +54,7 @@ public class UpmsAuthT extends Model<UpmsAuthT> {
     private java.util.Date creationDate;
 
     @ApiModelProperty(value = "最后更新者id",example = "1")
-    @TableField(value = "LAST_UPDATED_BY")
+    @TableField(value = "LAST_UPDATED_BY",jdbcType = JdbcType.INTEGER)
     private Integer lastUpdatedBy;
 
     //@TableField("LAST_UPDATED_DATE")
@@ -58,12 +62,13 @@ public class UpmsAuthT extends Model<UpmsAuthT> {
     private Date lastUpdatedDate;
 
     @ApiModelProperty(value = "最后登录id",example = "1")
-    @TableField("LAST_UPDATED_LOGIN")
+    @TableField(value = "LAST_UPDATED_LOGIN",jdbcType = JdbcType.INTEGER)
     private Integer lastUpdatedLogin;
 
     @TableLogic
     @TableField(value = "DELETE_FLAG",jdbcType = JdbcType.VARCHAR)
     private String deleteFlag;
+
     @TableField(value = "DESCRIPTION",jdbcType = JdbcType.VARCHAR)
     private String description;
 

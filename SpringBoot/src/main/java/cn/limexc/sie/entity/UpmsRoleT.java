@@ -19,6 +19,7 @@ import org.apache.ibatis.type.JdbcType;
  */
 @Data
 @Accessors(chain = true)
+@KeySequence(value = "UPMS_ROLE_S")
 @TableName("UPMS_ROLE_T")
 public class UpmsRoleT extends Model<UpmsRoleT> {
 
@@ -27,46 +28,47 @@ public class UpmsRoleT extends Model<UpmsRoleT> {
     /**
      * 表序列 ID，该字段使用序列
      */
-    @TableId(value = "ROLE_ID", type = IdType.ID_WORKER)
-    private Double roleId;
+    @ApiModelProperty(value = "表序列id",example = "1")
+    @TableId(value = "ROLE_ID", type = IdType.INPUT)
+    private Integer roleId;
     /**
      * 角色ID
      */
-    @TableField("ROLE_NO")
-    private Double roleNo;
+    @TableField(value = "ROLE_NO",jdbcType = JdbcType.INTEGER)
+    private Integer roleNo;
     /**
      * 角色名称
      */
-    @TableField("ROLE_NAME")
+    @TableField(value = "ROLE_NAME",jdbcType = JdbcType.VARCHAR)
     private String roleName;
     /**
      * 生效时间
      */
-    @TableField("ROLE_STARTTIME")
-    private Date roleStarttime;
+    @TableField(value = "ROLE_STARTTIME",jdbcType = JdbcType.DATE)
+    private Date roleStartTime;
     /**
      * 失效时间
      */
-    @TableField("ROLE_STOPTIME")
-    private Date roleStoptime;
+    @TableField(value = "ROLE_STOPTIME",jdbcType = JdbcType.DATE)
+    private Date roleStopTime;
     /**
      * 角色状态
      */
-    @TableField("ROLE_STATUS")
-    private Long roleStatus;
+    @TableField(value = "ROLE_STATUS",jdbcType = JdbcType.VARCHAR)
+    private String roleStatus;
     /**
      * 备注
      */
-    @TableField("ROLE_NOTE")
+    @TableField(value = "ROLE_NOTE",jdbcType = JdbcType.VARCHAR)
     private String roleNote;
-    @TableField("ROLE_BACK1")
+    @TableField(value = "ROLE_BACK1",jdbcType = JdbcType.VARCHAR)
     private String roleBack1;
-    @TableField("ROLE_BACK2")
+    @TableField(value = "ROLE_BACK2",jdbcType = JdbcType.VARCHAR)
     private String roleBack2;
-    @TableField("ROLE_BACK3")
+    @TableField(value = "ROLE_BACK3",jdbcType = JdbcType.VARCHAR)
     private String roleBack3;
     @ApiModelProperty(value = "创建者id",example = "1")
-    @TableField(value = "CREATED_BY")
+    @TableField(value = "CREATED_BY",jdbcType = JdbcType.INTEGER)
     private Integer createdBy;
 
     //@TableField("CREATION_DATE")
@@ -74,7 +76,7 @@ public class UpmsRoleT extends Model<UpmsRoleT> {
     private Date creationDate;
 
     @ApiModelProperty(value = "最后更新者id",example = "1")
-    @TableField(value = "LAST_UPDATED_BY")
+    @TableField(value = "LAST_UPDATED_BY",jdbcType = JdbcType.INTEGER)
     private Integer lastUpdatedBy;
 
     //@TableField("LAST_UPDATED_DATE")
@@ -82,7 +84,7 @@ public class UpmsRoleT extends Model<UpmsRoleT> {
     private Date lastUpdatedDate;
 
     @ApiModelProperty(value = "最后登录id",example = "1")
-    @TableField("LAST_UPDATED_LOGIN")
+    @TableField(value = "LAST_UPDATED_LOGIN",jdbcType = JdbcType.INTEGER)
     private Integer lastUpdatedLogin;
 
     @TableLogic

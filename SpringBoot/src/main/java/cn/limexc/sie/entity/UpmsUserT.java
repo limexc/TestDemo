@@ -40,17 +40,17 @@ public class UpmsUserT extends Model<UpmsUserT> {
     /**
      * 用户名
      */
-    @TableField("user_ALIAS")
+    @TableField(value = "user_ALIAS",jdbcType = JdbcType.VARCHAR)
     private String userAlias;
     /**
      * 真实姓名
      */
-    @TableField("user_NAME")
+    @TableField(value = "user_NAME",jdbcType = JdbcType.VARCHAR)
     private String userName;
     /**
      * 账户密码
      */
-    @TableField("user_PASSWD")
+    @TableField(value = "user_PASSWD",jdbcType = JdbcType.VARCHAR)
     private String userPasswd;
     /**
      * 电话
@@ -70,7 +70,7 @@ public class UpmsUserT extends Model<UpmsUserT> {
     /**
      * 用户状态
      */
-    @TableField("user_STATUS")
+    @TableField(value = "user_STATUS",jdbcType = JdbcType.VARCHAR)
     private String userStatus;
     /**
      * 备注
@@ -84,7 +84,7 @@ public class UpmsUserT extends Model<UpmsUserT> {
     @TableField(value = "user_BACK3",jdbcType = JdbcType.VARCHAR)
     private String userBack3;
     @ApiModelProperty(value = "创建者id",example = "1")
-    @TableField(value = "CREATED_BY")
+    @TableField(value = "CREATED_BY",jdbcType = JdbcType.INTEGER)
     private Integer createdBy;
 
     //@TableField("CREATION_DATE")
@@ -92,7 +92,7 @@ public class UpmsUserT extends Model<UpmsUserT> {
     private Date creationDate;
 
     @ApiModelProperty(value = "最后更新者id",example = "1")
-    @TableField(value = "LAST_UPDATED_BY")
+    @TableField(value = "LAST_UPDATED_BY",jdbcType = JdbcType.INTEGER)
     private Integer lastUpdatedBy;
 
     //@TableField("LAST_UPDATED_DATE")
@@ -100,7 +100,7 @@ public class UpmsUserT extends Model<UpmsUserT> {
     private Date lastUpdatedDate;
 
     @ApiModelProperty(value = "最后登录id",example = "1")
-    @TableField("LAST_UPDATED_LOGIN")
+    @TableField(value = "LAST_UPDATED_LOGIN",jdbcType = JdbcType.INTEGER)
     private Integer lastUpdatedLogin;
 
     @TableLogic

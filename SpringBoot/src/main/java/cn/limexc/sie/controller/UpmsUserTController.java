@@ -34,7 +34,7 @@ import java.util.List;
 public class UpmsUserTController {
 
     @Autowired
-    private UpmsUserTService UpmsUserTService;
+    private UpmsUserTService upmsUserTService;
 
 
     /**
@@ -57,7 +57,7 @@ public class UpmsUserTController {
             //1.引入分页插件,pageNum是第几页，pageSize是每页显示多少条,默认查询总数count
             PageHelper.startPage(current,limit);
             //2.紧跟的查询就是一个分页查询-必须紧跟.后面的其他查询不会被分页
-            userTS=UpmsUserTService.list();
+            userTS=upmsUserTService.list();
             //3.使用PageInfo包装查询后的结果
             PageInfo pageInfo = new PageInfo(userTS, limit);
             return ResultData.success(pageInfo);
@@ -76,18 +76,18 @@ public class UpmsUserTController {
             @PathVariable int current,
             @ApiParam(name = "limit",value = "分页大小",required = true)
             @PathVariable int limit,
-            @ApiParam(name = "UpmsUserTQuery",value = "查询条件",required = false)
-            @RequestBody(required = false)UpmsUserTQuery UpmsUserTQuery){
+            @ApiParam(name = "upmsUserTQuery",value = "查询条件",required = false)
+            @RequestBody(required = false)UpmsUserTQuery upmsUserTQuery){
         //创建page对象
         Page<UpmsUserT> userTPage = new Page<UpmsUserT>(current,limit);
         //构建条件
         QueryWrapper<UpmsUserT> wrapper = new QueryWrapper<UpmsUserT>();
         //多条件组合查询
-        String userAlias = UpmsUserTQuery.getUserAlias();
-        String userName=UpmsUserTQuery.getUserName();
-        String userStatus=UpmsUserTQuery.getUserStatus();
-        Date creationDate=UpmsUserTQuery.getCreationDate();
-        Date lastUpdatedDate=UpmsUserTQuery.getLastUpdatedDate();
+        String userAlias = upmsUserTQuery.getUserAlias();
+        String userName=upmsUserTQuery.getUserName();
+        String userStatus=upmsUserTQuery.getUserStatus();
+        Date creationDate=upmsUserTQuery.getCreationDate();
+        Date lastUpdatedDate=upmsUserTQuery.getLastUpdatedDate();
         //判断条件是否为空，如果不为空则拼接条件
         if (!StringUtils.isEmpty(userAlias)){
             wrapper.like("user_alias",userAlias);
@@ -106,7 +106,7 @@ public class UpmsUserTController {
         }
 
         //调用方法实现条件查询分页
-        UpmsUserTService.page(userTPage,wrapper);
+        upmsUserTService.page(userTPage,wrapper);
         //总记录数
         long total = userTPage.getTotal();
 
@@ -116,29 +116,31 @@ public class UpmsUserTController {
 
     /**
      * 添加用户功能
-     * @param UpmsUserT  用户
+     * @param upmsUserT  用户
      * @return               格式化数据
      */
     @ApiOperation("添加用户")
     @PostMapping("/addUser")
     public ResultData addUser(
             @ApiParam(name = "UpmsUserT",value = "用户信息",required = true)
-            @RequestBody UpmsUserT UpmsUserT){
+            @RequestBody UpmsUserT upmsUserT){
 
         boolean save = false;
         try {
             //用来判断传入的数据是否符合要求
-            if (UpmsUserT!=null){
-                if (UpmsUserT.getUserPasswd()!=""){
-                    UpmsUserT.setUserPasswd(
+            if (upmsUserT!=null){
+
+
+                if (upmsUserT.getUserPasswd()!=""){
+                    upmsUserT.setUserPasswd(
                             //用户密码加密存储
-                            SecureUtil.md5(UpmsUserT.getUserPasswd())
+                            SecureUtil.md5(upmsUserT.getUserPasswd())
                     );
                 }
 
 
             }
-            save = UpmsUserTService.save(UpmsUserT);
+            save = upmsUserTService.save(upmsUserT);
             if (save){
                 return ResultData.success(save);
             }
@@ -158,7 +160,7 @@ public class UpmsUserTController {
     @GetMapping("/getuser/{id}")
     public ResultData getUser(@PathVariable String id){
         UpmsUserT user = null;
-        user=UpmsUserTService.getById(id);
+        user=upmsUserTService.getById(id);
         if (user!=null){
             return ResultData.success(user);
         }
@@ -166,21 +168,21 @@ public class UpmsUserTController {
     }
 
     @PostMapping("/updatauser")
-    public ResultData editUser(@RequestBody UpmsUserT UpmsUserT){
+    public ResultData editUser(@RequestBody UpmsUserT upmsUserT){
         boolean change = false;
         try{
             //用来判断传入的数据是否符合要求  后面单独抽取
-            if (UpmsUserT!=null){
-                if (UpmsUserT.getUserPasswd()!=""){
-                    UpmsUserT.setUserPasswd(
+            if (upmsUserT!=null){
+                if (upmsUserT.getUserPasswd()!=""){
+                    upmsUserT.setUserPasswd(
                             //用户密码加密存储
-                            SecureUtil.md5(UpmsUserT.getUserPasswd())
+                            SecureUtil.md5(upmsUserT.getUserPasswd())
                     );
                 }
 
 
             }
-            change = UpmsUserTService.updateById(UpmsUserT);
+            change = upmsUserTService.updateById(upmsUserT);
             if (change){
                 return ResultData.success(change);
             }
@@ -205,7 +207,7 @@ public class UpmsUserTController {
         System.out.println(id);
         boolean isDelete = false;
         try {
-            isDelete = UpmsUserTService.removeById(id);
+            isDelete = upmsUserTService.removeById(id);
             if (isDelete){
                 return ResultData.success(isDelete);
             }else {
