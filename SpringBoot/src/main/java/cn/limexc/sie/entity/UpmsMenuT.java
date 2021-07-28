@@ -3,11 +3,13 @@ package cn.limexc.sie.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.type.JdbcType;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * <p>
@@ -80,20 +82,30 @@ public class UpmsMenuT extends Model<UpmsMenuT> {
     private String menuBack2;
     @TableField("MENU_BACK3")
     private String menuBack3;
-    @TableField("CREATED_BY")
-    private Double createdBy;
-    @TableField("CREATION_DATE")
-    private Date creationDate;
-    @TableField("LAST_UPDATED_BY")
-    private Double lastUpdatedBy;
-    @TableField("LAST_UPDATED_DATE")
+    @ApiModelProperty(value = "创建者id",example = "1")
+    @TableField(value = "CREATED_BY")
+    private Integer createdBy;
+
+    //@TableField("CREATION_DATE")
+    @TableField(fill = FieldFill.INSERT, jdbcType= JdbcType.TIMESTAMP)
+    private java.util.Date creationDate;
+
+    @ApiModelProperty(value = "最后更新者id",example = "1")
+    @TableField(value = "LAST_UPDATED_BY")
+    private Integer lastUpdatedBy;
+
+    //@TableField("LAST_UPDATED_DATE")
+    @TableField(fill = FieldFill.INSERT_UPDATE,jdbcType = JdbcType.TIMESTAMP)
     private Date lastUpdatedDate;
+
+    @ApiModelProperty(value = "最后登录id",example = "1")
     @TableField("LAST_UPDATED_LOGIN")
-    private Double lastUpdatedLogin;
-    @TableField("DELETE_FLAG")
+    private Integer lastUpdatedLogin;
+
     @TableLogic
+    @TableField(value = "DELETE_FLAG",jdbcType = JdbcType.VARCHAR)
     private String deleteFlag;
-    @TableField("DESCRIPTION")
+    @TableField(value = "DESCRIPTION",jdbcType = JdbcType.VARCHAR)
     private String description;
 
 

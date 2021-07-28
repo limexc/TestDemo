@@ -113,6 +113,13 @@
             <version>11.2.0.4.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.oracle/ojdbc6
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.4.0-atlassian-hosted</version>
+        </dependency>
+        -->
 
         <!-- MySQL数据库驱动 -->
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->

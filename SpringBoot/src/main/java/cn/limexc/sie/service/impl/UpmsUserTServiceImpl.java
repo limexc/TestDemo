@@ -1,9 +1,9 @@
 package cn.limexc.sie.service.impl;
 
-import cn.limexc.sie.entity.UpmsUserinfoT;
-import cn.limexc.sie.entity.vo.UpmsUserinfoTQuery;
-import cn.limexc.sie.mapper.UpmsUserinfoTMapper;
-import cn.limexc.sie.service.UpmsUserinfoTService;
+import cn.limexc.sie.entity.UpmsUserT;
+import cn.limexc.sie.entity.vo.UpmsUserTQuery;
+import cn.limexc.sie.mapper.UpmsUserTMapper;
+import cn.limexc.sie.service.UpmsUserTService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
@@ -18,6 +18,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-07-27
  */
 @Service
-public class UpmsUserinfoTServiceImpl extends ServiceImpl<UpmsUserinfoTMapper, UpmsUserinfoT> implements UpmsUserinfoTService {
+public class UpmsUserTServiceImpl extends ServiceImpl<UpmsUserTMapper, UpmsUserT> implements UpmsUserTService {
 
 }

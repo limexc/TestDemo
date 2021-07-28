@@ -38,54 +38,54 @@
     </el-table-column>
     <el-table-column
       label="序号"
-      prop="userinfoId"
+      prop="userId"
       min-width="5%">
     </el-table-column>
     <el-table-column
         label="用户名"
-        prop="userinfoAlias"
+        prop="userAlias"
         min-width="10%">
     </el-table-column>
 
     <el-table-column
-        prop="userinfoName"
+        prop="userName"
         label="姓名"
         min-width="10%">
     </el-table-column>
 
     <el-table-column
         label="性别"
-        prop="userinfoGender"
-        min-width="10%">
+        prop="userGender"
+        min-width="5%">
     </el-table-column>
 
     <el-table-column
         label="联系电话"
-        prop="userinfoTel"
+        prop="userTel"
         min-width="10%">
     </el-table-column>
     <el-table-column
         label="邮箱"
-        prop="userinfoEmail"
-        min-width="20%">
+        prop="userEmail"
+        min-width="15%">
     </el-table-column>
 
 
     <el-table-column
         label="创建时间"
         prop="creationDate"
-        min-width="10%">
+        min-width="15%">
     </el-table-column>
 
     <el-table-column
         label="最后修改时间"
-        min-width="10%"
+        min-width="15%"
         prop="lastUpdatedDate">
     </el-table-column>
 
     <el-table-column
         label="状态"
-        prop="userinfoStatus"
+        prop="userStatus"
         min-width="10%">
     </el-table-column>
 
@@ -95,7 +95,7 @@
       <template slot-scope="scope">
 
         <el-button
-            @click.native.prevent="userInfoEdit(scope.$index,  scope.row)"
+            @click.native.prevent="userEdit(scope.$index,  scope.row)"
             type="text"
             size="small">
           修改
@@ -137,7 +137,7 @@ export default {
     let _this = this
     axios.get('/userinfo/userList').then(function (response){
       console.log(response)
-      _this.tableData = response.data.data
+      _this.tableData = response.data.info.list
     })
   },
   data() {

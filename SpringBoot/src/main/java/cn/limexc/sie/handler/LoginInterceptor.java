@@ -1,6 +1,6 @@
 package cn.limexc.sie.handler;
 
-import cn.limexc.sie.entity.UpmsUserinfoT;
+import cn.limexc.sie.entity.UpmsUserT;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,7 +23,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         //获取请求的URI
         String uri = request.getRequestURI();
         HttpSession session = request.getSession();
-        UpmsUserinfoT sysUser = (UpmsUserinfoT) session.getAttribute("sysUser");
+        UpmsUserT sysUser = (UpmsUserT) session.getAttribute("sysUser");
 
 
         System.out.println("用户:"+ " 访问的URI是："+uri);

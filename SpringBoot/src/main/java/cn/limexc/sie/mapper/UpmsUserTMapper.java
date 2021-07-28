@@ -1,6 +1,6 @@
 package cn.limexc.sie.mapper;
 
-import cn.limexc.sie.entity.UpmsUserinfoT;
+import cn.limexc.sie.entity.UpmsUserT;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2021-07-27
  */
 @Mapper
-public interface UpmsUserinfoTMapper extends BaseMapper<UpmsUserinfoT> {
+public interface UpmsUserTMapper extends BaseMapper<UpmsUserT> {
 
 }

@@ -1,8 +1,8 @@
 package cn.limexc.sie;
 
-import cn.limexc.sie.entity.UpmsUserinfoT;
-import cn.limexc.sie.mapper.UpmsUserinfoTMapper;
-import cn.limexc.sie.service.UpmsUserinfoTService;
+import cn.limexc.sie.entity.UpmsUserT;
+import cn.limexc.sie.mapper.UpmsUserTMapper;
+import cn.limexc.sie.service.UpmsUserTService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.junit.jupiter.api.Test;
@@ -14,9 +14,9 @@ import java.util.List;
 @SpringBootTest
 class SieApplicationTests {
 	@Autowired
-	UpmsUserinfoTMapper upmsUserinfoTMapper;
+	UpmsUserTMapper UpmsUserTMapper;
 	@Autowired
-	UpmsUserinfoTService upmsUserinfoTService;
+	UpmsUserTService UpmsUserTService;
 
 	@Test
 	void contextLoads() {
@@ -24,7 +24,7 @@ class SieApplicationTests {
 
 	@Test
 	public void delTest(){
-		int affectRows = upmsUserinfoTMapper.deleteById(2);
+		int affectRows = UpmsUserTMapper.deleteById(2);
 		if(affectRows>0){
 			System.out.println("删除成功");
 		}else{
@@ -35,13 +35,13 @@ class SieApplicationTests {
 
 	@Test
 	public void userlisttest(){
-		List<UpmsUserinfoT> userinfoTS= upmsUserinfoTMapper.selectList(null);
-		for (UpmsUserinfoT user: userinfoTS) {
+		List<UpmsUserT> userTS= UpmsUserTMapper.selectList(null);
+		for (UpmsUserT user: userTS) {
 			System.out.println(user.toString());
 		}
 		System.out.println("-----------------");
-		List<UpmsUserinfoT> users=upmsUserinfoTService.list();
-		for (UpmsUserinfoT us: users){
+		List<UpmsUserT> users=UpmsUserTService.list();
+		for (UpmsUserT us: users){
 			System.out.println(us.toString());
 		}
 
@@ -54,9 +54,21 @@ class SieApplicationTests {
 		if (page > 0 && size > 0) {
 			PageHelper.startPage(page, size);  //在查询之前添加这块代码
 		}
-		List<UpmsUserinfoT> users = upmsUserinfoTMapper.selectList(null); //mybatisplus的查询方法
-		PageInfo<UpmsUserinfoT> list = new PageInfo<>(users); //转换为PageInfo的对象
+		List<UpmsUserT> users = UpmsUserTMapper.selectList(null); //mybatisplus的查询方法
+		PageInfo<UpmsUserT> list = new PageInfo<>(users); //转换为PageInfo的对象
 		System.out.println(list);
+	}
+
+	@Test
+	public void insertUserTest(){
+		UpmsUserT user = new UpmsUserT();
+		user.setUserAlias("uuxxz");
+		user.setUserName("xiaoxianzi");
+		user.setUserPasswd("123123");
+		user.setUserStatus("Act");
+		int a= UpmsUserTMapper.insert(user);
+		System.out.println(a);
+
 	}
 
 }

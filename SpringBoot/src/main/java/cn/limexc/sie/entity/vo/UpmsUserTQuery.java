@@ -15,12 +15,12 @@ import java.util.Date;
  * @Create 2021/7/28 0:50
  */
 @Data
-public class UpmsUserinfoTQuery {
+public class UpmsUserTQuery {
 
     @ApiModelProperty("用户名 模糊查询")
-    private String userinfoAlias;
-    private String userinfoName;
-    private String userinfoStatus;
+    private String userAlias;
+    private String userName;
+    private String userStatus;
     private Date creationDate;
     private Date lastUpdatedDate;
 
