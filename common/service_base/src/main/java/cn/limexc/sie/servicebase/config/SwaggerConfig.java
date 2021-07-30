@@ -37,10 +37,10 @@ public class SwaggerConfig {
 
     private ApiInfo webApiInfo() {
         return new ApiInfoBuilder()
-                .title("网站-课程中心API文档")
-                .description("本文档描述了课程中心微服务接口定义")
+                .title("用户权限管理系统API文档")
+                .description("本文档描述了用户权限管理系统接口定义")
                 .version("1.0")
-                .contact(new Contact("Helen", "http://atguigu.com", "55317332@qq.com"))
+                .contact(new Contact("limexc", "https://blog.limexc.cn", "zhiyuanxzy@gmail.com"))
                 .build();
     }
 

@@ -23,7 +23,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @KeySequence(value = "UPMS_MENU_S")
 @TableName("UPMS_MENU_T")
-public class UpmsMenuT extends Model<UpmsMenuT> {
+public class UpmsMenuT extends BaseEntity {//Model<UpmsMenuT>
 
     private static final long serialVersionUID = 1L;
 
@@ -83,6 +83,7 @@ public class UpmsMenuT extends Model<UpmsMenuT> {
     private String menuBack2;
     @TableField(value = "MENU_BACK3",jdbcType = JdbcType.VARCHAR)
     private String menuBack3;
+    /*
     @ApiModelProperty(value = "创建者id",example = "1")
     @TableField(value = "CREATED_BY",jdbcType = JdbcType.INTEGER)
     private Integer createdBy;
@@ -108,7 +109,7 @@ public class UpmsMenuT extends Model<UpmsMenuT> {
     private String deleteFlag;
     @TableField(value = "DESCRIPTION",jdbcType = JdbcType.VARCHAR)
     private String description;
-
+*/
 
     @Override
     protected Serializable pkVal() {

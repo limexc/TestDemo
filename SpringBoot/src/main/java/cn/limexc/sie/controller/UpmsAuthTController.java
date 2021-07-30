@@ -27,7 +27,7 @@ public class UpmsAuthTController {
     @Autowired
     private UpmsAuthTService upmsAuthTService;
 
-    // 增
+    // 增 当增加目录、菜单、功能时自动增加该字段？  通过数据库实现？
 
 
 

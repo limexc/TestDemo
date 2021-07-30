@@ -14,5 +14,6 @@ public class UpmsRoleTQuery {
 
     private String roleName;
     private String roleStatus;
+    private int roleId;
 
 }

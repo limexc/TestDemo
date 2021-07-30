@@ -61,7 +61,7 @@ public class UpmsRoleTController {
     // 删
     @DeleteMapping(value = "/delrole")
     public ResultData delRole(@ApiParam(name = "id",value = "角色id",required = true)
-                              @PathVariable String id){
+                                  @RequestParam(value = "id") String id){
         boolean isDelete = false;
         try {
             isDelete = upmsRoleTService.removeById(id);
@@ -77,7 +77,7 @@ public class UpmsRoleTController {
 
 
     // 改
-    @PostMapping("/deitrole")
+    @PostMapping("/editrole")
     public ResultData editRole(
             @RequestBody UpmsRoleT upmsRoleT){
         boolean change = false;
@@ -101,14 +101,14 @@ public class UpmsRoleTController {
 
 
     // 查
-    @GetMapping("/findroleid")
-    public ResultData findRoleById(
+    @PostMapping("/findrole")
+    public ResultData findRole(
             @ApiParam(name = "current",value = "页码",required = true)
-            @PathVariable int current,
+            @RequestParam(value = "current",required = false,defaultValue = "1") int current,
             @ApiParam(name = "limit",value = "分页大小",required = true)
-            @PathVariable int limit,
+            @RequestParam(value = "limit",required = false,defaultValue = "5") int limit,
             @ApiParam(name = "upmsUserTQuery",value = "查询条件",required = false)
-            @RequestBody(required = false) UpmsRoleTQuery upmsRoleTQuery){
+            @RequestBody(required = true) UpmsRoleTQuery upmsRoleTQuery){
         //创建page对象
         Page<UpmsRoleT> userTPage = new Page<UpmsRoleT>(current,limit);
         //构建条件
@@ -116,6 +116,7 @@ public class UpmsRoleTController {
         //多条件组合查询
         String roleName = upmsRoleTQuery.getRoleName();
         String roleStatus = upmsRoleTQuery.getRoleStatus();
+        int roleId = upmsRoleTQuery.getRoleId();
 
         //判断条件是否为空，如果不为空则拼接条件
         if (!StringUtils.isEmpty(roleName)){
@@ -123,6 +124,9 @@ public class UpmsRoleTController {
         }
         if (!StringUtils.isEmpty(roleStatus)){
             wrapper.eq("role_status",roleStatus);
+        }
+        if (roleId!=0){
+            wrapper.eq("role_id",roleId);
         }
 
 
@@ -139,9 +143,9 @@ public class UpmsRoleTController {
     @GetMapping("/rolelist")
     public ResultData roleList(
             @ApiParam(name = "current",value = "页码",required = true)
-            @PathVariable int current,
+            @RequestParam(value = "current",required = false) int current,
             @ApiParam(name = "limit",value = "分页大小",required = true)
-            @PathVariable int limit){
+            @RequestParam(value = "limit",required = false) int  limit){
         //创建page对象
         Page<UpmsRoleT> userTPage = new Page<UpmsRoleT>(current,limit);
 

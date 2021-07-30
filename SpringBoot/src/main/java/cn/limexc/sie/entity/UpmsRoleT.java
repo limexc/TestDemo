@@ -21,7 +21,7 @@ import org.apache.ibatis.type.JdbcType;
 @Accessors(chain = true)
 @KeySequence(value = "UPMS_ROLE_S")
 @TableName("UPMS_ROLE_T")
-public class UpmsRoleT extends Model<UpmsRoleT> {
+public class UpmsRoleT extends BaseEntity {//Model<UpmsRoleT>
 
     private static final long serialVersionUID = 1L;
 
@@ -67,6 +67,8 @@ public class UpmsRoleT extends Model<UpmsRoleT> {
     private String roleBack2;
     @TableField(value = "ROLE_BACK3",jdbcType = JdbcType.VARCHAR)
     private String roleBack3;
+
+    /*
     @ApiModelProperty(value = "创建者id",example = "1")
     @TableField(value = "CREATED_BY",jdbcType = JdbcType.INTEGER)
     private Integer createdBy;
@@ -92,7 +94,7 @@ public class UpmsRoleT extends Model<UpmsRoleT> {
     private String deleteFlag;
     @TableField(value = "DESCRIPTION",jdbcType = JdbcType.VARCHAR)
     private String description;
-
+*/
 
     @Override
     protected Serializable pkVal() {

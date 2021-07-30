@@ -26,6 +26,11 @@ public class AutoUpdateHandler implements MetaObjectHandler {
         this.strictInsertFill(metaObject, "creationDate", Date.class,new Date());
         //插入时填充最后更新时间
         this.strictUpdateFill(metaObject, "lastUpdatedDate", Date.class, new Date());
+        //插入时更新创建人员id以及最后更新人员id
+        //this.strictUpdateFill(metaObject, "createdBy", String.class,"");
+        //this.strictUpdateFill(metaObject, "lastUpdatedBy", String.class,"");
+        //this.strictUpdateFill(metaObject, "lastUpdatedLogin", String.class,"");
+
     }
 
     @Override
@@ -33,6 +38,8 @@ public class AutoUpdateHandler implements MetaObjectHandler {
         log.info("start update fill ....");
         // 起始版本 3.3.0(推荐)LocalDateTime.class, LocalDateTime.now()
         this.strictUpdateFill(metaObject, "lastUpdatedDate", Date.class, new Date());
+       // this.strictUpdateFill(metaObject, "lastUpdatedBy", String.class,"");
+       // this.strictUpdateFill(metaObject, "lastUpdatedLogin", String.class,"");
     }
 
     /**

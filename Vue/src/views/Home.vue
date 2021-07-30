@@ -4,7 +4,7 @@
     <el-header style="text-align: left; font-size: 12px">
       <h1 style="display: inline-block;font-size: 20px">用户权限管理系统</h1>
       <span style="margin-left: 83%"></span>
-      <span>王小虎</span><span>，欢迎您。 </span>
+      <span>{{}}</span><span>，欢迎您。 </span>
       <el-dropdown>
         <i class="el-icon-setting" style="margin-right: 20px"></i>
         <el-dropdown-menu slot="dropdown">

@@ -1,28 +1,27 @@
 <template>
   <div>
-  <el-input v-model="tableDataname" placeholder="请输入姓名" style="width:240px"></el-input>
-  <el-button type="primary" @click="doFilter">搜索</el-button>
+    <div style="margin-top: -10px">
+      <el-input v-model="tableDataname" placeholder="请输入姓名" style="width:240px;padding: 10px"></el-input>
 
-    <el-select v-model="value" placeholder="请选择">
-      <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-      </el-option>
-    </el-select>
-
-  <el-date-picker
-      v-model="value1"
-      type="daterange"
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期">
-  </el-date-picker>
-
-
-
-  <el-table
+      <el-select v-model="selectValue" placeholder="请选择" style="padding: 10px">
+        <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+        </el-option>
+      </el-select>
+      {{selectValue}}
+      <el-date-picker
+          v-model="value1"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期">
+      </el-date-picker>
+      <el-button type="primary" @click="doFilter" style="padding: 10px;margin-left: 10px">搜索</el-button>
+    </div>
+    <el-table
       ref="multipleTable"
       :data="tableData"
       tooltip-effect="dark"
@@ -37,7 +36,7 @@
         min-width="5%">
     </el-table-column>
     <el-table-column
-      label="序号"
+      label="ID"
       prop="userId"
       min-width="5%">
     </el-table-column>
@@ -131,15 +130,47 @@
 
 
 <script>
+
 export default {
   name: 'v-user-manage',
+
   created(){
-    let _this = this
-    axios.get('/userinfo/userList').then(function (response){
+    let _this = this;
+    /*
+    _this.$axios({
+      url:'/user/finduser?current=1&limilt=5',
+      date: JSON.stringify({
+        "creationDate": "2021-07-29 08:17:08.104",
+        "lastUpdatedDate": "2021-08-29 08:17:08.104",
+        "userAlias": "",
+        "userName": "",
+        "userStatus": ""
+      }),
+      header:{
+        'Content-Type':'application/json',  //如果写成contentType会报错
+      },
+      method:"post"
+    }).then(function (response){
       console.log(response)
-      _this.tableData = response.data.info.list
+      _this.tableData = response.data.info
+    })
+    */
+
+    axios.post(
+        '/user/finduser?current=1&limilt=5',
+        {
+          "creationDate": "2021-06-29 08:17:08.104",
+          "lastUpdatedDate": "2021-08-30 08:17:08.104",
+          "userAlias": "",
+          "userName": "",
+          "userStatus": ""
+        }
+    ).then(function (response){
+      console.log(response)
+      _this.tableData = response.data.info
     })
   },
+
   data() {
     return {
       tableData: null,
@@ -180,23 +211,17 @@ export default {
 
 
       options: [{
-        value: '选项1',
-        label: '黄金糕'
+        value: 'All',
+        label: '全部'
       }, {
-        value: '选项2',
-        label: '双皮奶'
+        value: 'Act',
+        label: '有效'
       }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
+        value: 'Del',
+        label: '无效'
       }],
-      value: ''
 
+      selectValue: ''
 
     }
   },

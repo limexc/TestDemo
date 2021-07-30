@@ -18,6 +18,8 @@ import java.util.Date;
  * UPMS权限管理需要 权限表
  * </p>
  *
+ * 权限就是用户在登录后能看到系统中哪些菜单、目录、功能
+ * 在该实体类中通过用户id与菜单、目录、功能id的绑定，在通过查询数据库后返回该用户正确的权限
  * @author testjava
  * @since 2021-07-27
  */
@@ -25,7 +27,7 @@ import java.util.Date;
 @KeySequence(value = "UPMS_AUTH_S")
 @Accessors(chain = true)
 @TableName("UPMS_AUTH_T")
-public class UpmsAuthT extends Model<UpmsAuthT> {
+public class UpmsAuthT extends BaseEntity {//Model<UpmsAuthT>
 
     private static final long serialVersionUID = 1L;
 
@@ -36,7 +38,7 @@ public class UpmsAuthT extends Model<UpmsAuthT> {
     @TableId(value = "AUTH_ID", type = IdType.INPUT)
     private Integer authId;
     /**
-     * 菜单表id
+     * 菜单id
      */
     @TableField(value = "AUTH_MENUID",jdbcType = JdbcType.INTEGER)
     private Integer authMenuid;
@@ -45,6 +47,7 @@ public class UpmsAuthT extends Model<UpmsAuthT> {
      */
     @TableField(value = "AUTH_NAME",jdbcType = JdbcType.VARCHAR)
     private String authName;
+    /*
     @ApiModelProperty(value = "创建者id",example = "1")
     @TableField(value = "CREATED_BY",jdbcType = JdbcType.INTEGER)
     private Integer createdBy;
@@ -71,7 +74,7 @@ public class UpmsAuthT extends Model<UpmsAuthT> {
 
     @TableField(value = "DESCRIPTION",jdbcType = JdbcType.VARCHAR)
     private String description;
-
+*/
 
     @Override
     protected Serializable pkVal() {

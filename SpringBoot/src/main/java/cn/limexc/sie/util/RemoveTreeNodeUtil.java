@@ -13,7 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class RemoveTreeNodeUtil {
 
 
-    public static List<String> RemoveList(Map<Integer, Integer> map,Integer id){
+    public static List<String> RemoveList(Map<Integer, Integer> map,String id){
         List<String> renode = new ArrayList<String>();
         Set<Integer> keys=map.keySet();
         Iterator<Integer> iterator=keys.iterator();
@@ -23,7 +23,7 @@ public class RemoveTreeNodeUtil {
             System.out.println(i+" —— "+map.get(i));
         }
 
-        int k=id;
+        int k=Integer.parseInt(id);
         //递归删除k的所有子节点
         System.out.println("—— —— —— —— —— ——删除掉的节点 —— —— —— —— —— —— ——");
         removeTreeNodes(map,k,renode);

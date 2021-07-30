@@ -27,7 +27,7 @@ import org.apache.ibatis.type.JdbcType;
 @Accessors(chain = true)
 @KeySequence(value = "UPMS_USER_S")
 @TableName("UPMS_USER_T")
-public class UpmsUserT extends Model<UpmsUserT> {
+public class UpmsUserT extends BaseEntity {//Model<UpmsUserT>
 
     private static final long serialVersionUID = 1L;
 
@@ -83,32 +83,6 @@ public class UpmsUserT extends Model<UpmsUserT> {
     private String userBack2;
     @TableField(value = "user_BACK3",jdbcType = JdbcType.VARCHAR)
     private String userBack3;
-    @ApiModelProperty(value = "创建者id",example = "1")
-    @TableField(value = "CREATED_BY",jdbcType = JdbcType.INTEGER)
-    private Integer createdBy;
-
-    //@TableField("CREATION_DATE")
-    @TableField(fill = FieldFill.INSERT, jdbcType=JdbcType.TIMESTAMP)
-    private Date creationDate;
-
-    @ApiModelProperty(value = "最后更新者id",example = "1")
-    @TableField(value = "LAST_UPDATED_BY",jdbcType = JdbcType.INTEGER)
-    private Integer lastUpdatedBy;
-
-    //@TableField("LAST_UPDATED_DATE")
-    @TableField(fill = FieldFill.INSERT_UPDATE,jdbcType = JdbcType.TIMESTAMP)
-    private Date lastUpdatedDate;
-
-    @ApiModelProperty(value = "最后登录id",example = "1")
-    @TableField(value = "LAST_UPDATED_LOGIN",jdbcType = JdbcType.INTEGER)
-    private Integer lastUpdatedLogin;
-
-    @TableLogic
-    @TableField(value = "DELETE_FLAG",jdbcType = JdbcType.VARCHAR)
-    private String deleteFlag;
-    @TableField(value = "DESCRIPTION",jdbcType = JdbcType.VARCHAR)
-    private String description;
-
 
     @Override
     protected Serializable pkVal() {

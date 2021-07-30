@@ -9,8 +9,6 @@ import cn.limexc.sie.util.ResponseCode;
 import cn.limexc.sie.util.ResultData;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -30,7 +28,7 @@ import java.util.List;
  */
 @Api("用户管理")
 @RestController
-@RequestMapping("/userinfo")
+@RequestMapping("/user")
 public class UpmsUserTController {
 
     @Autowired
@@ -43,51 +41,25 @@ public class UpmsUserTController {
      * @param limit   分页大小
      * @return        格式化后json数据
      */
-    @ApiOperation("用户列表")
-    @GetMapping("/userList")
-    public ResultData getAllUser(
-            @ApiParam(name = "current",value = "页码",required = false)
-            @RequestParam(value = "current",defaultValue="1") int current,
-            @ApiParam(name = "limit",value = "分页大小",required = false)
-            @RequestParam(value = "limit",defaultValue = "5") int limit
-            ){
-        List<UpmsUserT> userTS = null;
-        try {
-            //这里还是用的PageHelper，注意修改
-            //1.引入分页插件,pageNum是第几页，pageSize是每页显示多少条,默认查询总数count
-            PageHelper.startPage(current,limit);
-            //2.紧跟的查询就是一个分页查询-必须紧跟.后面的其他查询不会被分页
-            userTS=upmsUserTService.list();
-            //3.使用PageInfo包装查询后的结果
-            PageInfo pageInfo = new PageInfo(userTS, limit);
-            return ResultData.success(pageInfo);
-        }catch (Exception e){
-            return ResultData.fail(ResponseCode.ERROR.val(), "读取数据失败");
-        }finally {
-            //清理 ThreadLocal 存储的分页参数,保证线程安全
-            PageHelper.clearPage();
-        }
-    }
-
     @ApiOperation("用户分页多条件查询")
-    @PostMapping("/pageUserCondition/{current}/{limit}")
+    @PostMapping("/finduser")
     public ResultData pageUserCondition(
             @ApiParam(name = "current",value = "页码",required = true)
-            @PathVariable int current,
+            @RequestParam(value = "current",defaultValue = "1")  int current,
             @ApiParam(name = "limit",value = "分页大小",required = true)
-            @PathVariable int limit,
+            @RequestParam(value = "limit",defaultValue = "5")  int limit,
             @ApiParam(name = "upmsUserTQuery",value = "查询条件",required = false)
-            @RequestBody(required = false)UpmsUserTQuery upmsUserTQuery){
+            @RequestBody(required = true)UpmsUserTQuery upmsUserTQuery){
         //创建page对象
         Page<UpmsUserT> userTPage = new Page<UpmsUserT>(current,limit);
         //构建条件
         QueryWrapper<UpmsUserT> wrapper = new QueryWrapper<UpmsUserT>();
         //多条件组合查询
         String userAlias = upmsUserTQuery.getUserAlias();
-        String userName=upmsUserTQuery.getUserName();
-        String userStatus=upmsUserTQuery.getUserStatus();
-        Date creationDate=upmsUserTQuery.getCreationDate();
-        Date lastUpdatedDate=upmsUserTQuery.getLastUpdatedDate();
+        String userName = upmsUserTQuery.getUserName();
+        String userStatus = upmsUserTQuery.getUserStatus();
+        Date creationDate = upmsUserTQuery.getCreationDate();
+        Date lastUpdatedDate = upmsUserTQuery.getLastUpdatedDate();
         //判断条件是否为空，如果不为空则拼接条件
         if (!StringUtils.isEmpty(userAlias)){
             wrapper.like("user_alias",userAlias);
@@ -157,8 +129,8 @@ public class UpmsUserTController {
      * @param id  用户id
      * @return    格式化数据信息
      */
-    @GetMapping("/getuser/{id}")
-    public ResultData getUser(@PathVariable String id){
+    @GetMapping("/getuser")
+    public ResultData getUser(@RequestParam("id") String id){
         UpmsUserT user = null;
         user=upmsUserTService.getById(id);
         if (user!=null){
@@ -167,7 +139,7 @@ public class UpmsUserTController {
         return ResultData.fail(ResponseCode.ERROR.val(), "未查询到该用户信息");
     }
 
-    @PostMapping("/updatauser")
+    @PostMapping("/edituser")
     public ResultData editUser(@RequestBody UpmsUserT upmsUserT){
         boolean change = false;
         try{
@@ -179,6 +151,7 @@ public class UpmsUserTController {
                             SecureUtil.md5(upmsUserT.getUserPasswd())
                     );
                 }
+
 
 
             }
@@ -200,10 +173,10 @@ public class UpmsUserTController {
      * @return        返回格式化数据
      */
     @ApiOperation("删除用户 逻辑删除")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deluser")
     public ResultData removeUser(
             @ApiParam(name = "id",value = "用户id",required = true)
-            @PathVariable String id){
+            @RequestParam("id") String id){
         System.out.println(id);
         boolean isDelete = false;
         try {

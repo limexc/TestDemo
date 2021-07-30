@@ -23,7 +23,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @KeySequence(value = "UPMS_ROFU_S")
 @TableName("UPMS_ROFU_T")
-public class UpmsRofuT extends Model<UpmsRofuT> {
+public class UpmsRofuT extends BaseEntity{//Model<UpmsRofuT>
 
     private static final long serialVersionUID = 1L;
 
@@ -40,13 +40,14 @@ public class UpmsRofuT extends Model<UpmsRofuT> {
     /**
      * 权限表ID
      */
-    @TableField("ROFU_AUTHID")
-    private Integer rofuAuthid;
+    @TableField("ROFU_ROLEID")
+    private Integer rofuRoleid;
     /**
      * 备注
      */
     @TableField("ROFU_NOTE")
     private String rofuNote;
+    /*
     @ApiModelProperty(value = "创建者id",example = "1")
     @TableField(value = "CREATED_BY")
     private Integer createdBy;
@@ -72,7 +73,7 @@ public class UpmsRofuT extends Model<UpmsRofuT> {
     private String deleteFlag;
     @TableField(value = "DESCRIPTION",jdbcType = JdbcType.VARCHAR)
     private String description;
-
+*/
 
     @Override
     protected Serializable pkVal() {

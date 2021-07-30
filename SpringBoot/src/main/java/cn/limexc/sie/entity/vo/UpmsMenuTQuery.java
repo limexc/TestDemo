@@ -15,5 +15,6 @@ public class UpmsMenuTQuery {
     private String menuName;
     private String menuType;
     private String menuStatus;
+    private int menuId;
 
 }

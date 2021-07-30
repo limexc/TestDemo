@@ -23,5 +23,6 @@ public class UpmsUserTQuery {
     private String userStatus;
     private Date creationDate;
     private Date lastUpdatedDate;
+    private int userId;
 
 }

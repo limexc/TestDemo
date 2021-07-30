@@ -35,7 +35,7 @@ public class UpmsMenuTest {
             }
             map.put(menuT.getMenuId(),menuT.getMenuUpper());
         }
-        List<String> renode = RemoveTreeNodeUtil.RemoveList(map,1);
+        List<String> renode = RemoveTreeNodeUtil.RemoveList(map,"14");
         for (String str:renode) {
             System.out.println(str);
         }

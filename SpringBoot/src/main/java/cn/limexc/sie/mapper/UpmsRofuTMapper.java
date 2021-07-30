@@ -2,6 +2,7 @@ package cn.limexc.sie.mapper;
 
 import cn.limexc.sie.entity.UpmsRofuT;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 
 /**
@@ -12,6 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author testjava
  * @since 2021-07-27
  */
+@Mapper
 public interface UpmsRofuTMapper extends BaseMapper<UpmsRofuT> {
 
 }

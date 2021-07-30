@@ -4,6 +4,7 @@ package cn.limexc.sie.controller;
 import cn.hutool.crypto.SecureUtil;
 import cn.limexc.sie.entity.UpmsMenuT;
 import cn.limexc.sie.entity.UpmsUserT;
+import cn.limexc.sie.entity.subject.IndexSub;
 import cn.limexc.sie.entity.vo.UpmsMenuTQuery;
 import cn.limexc.sie.entity.vo.UpmsUserTQuery;
 import cn.limexc.sie.service.UpmsMenuTService;
@@ -39,6 +40,7 @@ public class UpmsMenuTController {
     private UpmsMenuTService upmsMenuTService;
 
     // 增
+    @PostMapping("/addmenu")
     public ResultData addMenu(@RequestBody UpmsMenuT upmsMenuT){
         //拿到数据对内容进行格式校验
 
@@ -52,7 +54,8 @@ public class UpmsMenuTController {
 
 
     // 删  需要判断该菜单下是否还存在数据
-    public ResultData delMenu(@RequestParam("id") String id){
+    @DeleteMapping("/delmenu")
+    public ResultData delMenu(@RequestParam(value = "id") String id){
 //        QueryWrapper wrapper = new QueryWrapper();
 //        //通过id查找所有父目录为此id的数据  如果该目录的子目录下也有数据？
 //
@@ -72,7 +75,7 @@ public class UpmsMenuTController {
             }
             map.put(menuT.getMenuId(),menuT.getMenuUpper());
         }
-        List<String> renode = RemoveTreeNodeUtil.RemoveList(map,Integer.getInteger(id));
+        List<String> renode = RemoveTreeNodeUtil.RemoveList(map,id);
         boolean isDel = upmsMenuTService.removeByIds(renode);
         if (isDel){
             return ResultData.success(isDel);
@@ -84,7 +87,7 @@ public class UpmsMenuTController {
 
 
     // 改
-    @PostMapping("/update")
+    @PostMapping("/editmenu")
     public ResultData editMenu(@RequestBody UpmsMenuT upmsMenuT){
         boolean change = false;
         try {
@@ -106,11 +109,12 @@ public class UpmsMenuTController {
 
 
     // 查  全部与条件
+    @PostMapping("/findmenu")
     public ResultData pageMenuCondition(
             @ApiParam(name = "current",value = "页码",required = true)
-            @PathVariable int current,
+            @RequestParam(value = "current",defaultValue = "1") int current,
             @ApiParam(name = "limit",value = "分页大小",required = true)
-            @PathVariable int limit,
+            @RequestParam(value = "limit",defaultValue = "5") int limit,
             @ApiParam(name = "upmsUserTQuery",value = "查询条件",required = false)
             @RequestBody(required = false) UpmsMenuTQuery upmsMenuTQuery){
         //创建page对象
@@ -121,6 +125,7 @@ public class UpmsMenuTController {
         String menuName = upmsMenuTQuery.getMenuName();
         String menuType = upmsMenuTQuery.getMenuType();
         String menuStatus = upmsMenuTQuery.getMenuStatus();
+        int menuId = upmsMenuTQuery.getMenuId();
 
         //判断条件是否为空，如果不为空则拼接条件
         if (!StringUtils.isEmpty(menuName)){
@@ -132,6 +137,11 @@ public class UpmsMenuTController {
         if (!StringUtils.isEmpty(menuStatus)){
             wrapper.eq("menu_status",menuStatus);
         }
+        if (menuId!=0){
+            wrapper.eq("menu_id",menuId);
+        }
+
+
         //调用方法实现条件查询分页
         upmsMenuTService.page(menuTPage,wrapper);
         //总记录数
@@ -140,13 +150,13 @@ public class UpmsMenuTController {
         return ResultData.success(records);
     }
 
-    public ResultData getMenuById(@PathVariable String id){
-        UpmsMenuT menu = null;
-        menu=upmsMenuTService.getById(id);
-        if (menu!=null){
-            return ResultData.success(menu);
-        }
-        return ResultData.fail(ResponseCode.ERROR.val(), "未查询到信息");
+
+    @GetMapping("/getmenu")
+    public ResultData getTreeMenu(){
+        //list集合泛型为1级分类  目录 --  菜单
+        List<IndexSub> list =upmsMenuTService.getMenuTree();
+
+        return ResultData.success(list);
     }
 
 
