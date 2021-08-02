@@ -19,7 +19,7 @@ import java.util.Date;
  * @Create 2021/7/28 22:06
  */
 @Data
-public class BaseEntity extends Model {
+public class BaseEntity<T extends Model> extends Model{
     @ApiModelProperty(value = "创建者id",example = "1")
     @TableField(value = "CREATED_BY",jdbcType = JdbcType.INTEGER)
     private Integer createdBy;

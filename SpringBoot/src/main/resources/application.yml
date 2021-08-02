@@ -45,8 +45,7 @@ mybatis-plus:
   #type-aliases-package: com.wang.mybatis.dao  #可以添加此属性
   # 指定全局配置文件位置
   #config-location: classpath:mapper/mybatis-config.xml
-  # *.xml文件路径在java包下时，不可使用mybatis.mapper-locations配置
-  #mapper-locations: classpath:mapper/*.xml # 指定配置sql文件的位置
+  mapper-locations: classpath:mapper/*.xml
   type-aliases-package: cn.limexc.sie.entity   #别名
   configuration:
     map-underscore-to-camel-case: true
@@ -59,6 +58,7 @@ mybatis-plus:
       #logic-delete-field: flag  # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
       logic-delete-value: Y # 逻辑已删除值(默认为 1)
       logic-not-delete-value: N # 逻辑未删除值(默认为 0)
+
 pagehelper:
   helper-dialect: Oracle # 指定数据库类型
   reasonable: true

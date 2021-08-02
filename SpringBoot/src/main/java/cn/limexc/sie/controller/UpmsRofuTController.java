@@ -10,6 +10,7 @@ import cn.limexc.sie.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
  * UPMS权限管理 用户角色表 前端控制器
  * </p>
  *
- * @author testjava
+ * @author 贤致源
  * @since 2021-07-27
  */
 @RestController
@@ -58,43 +59,32 @@ public class UpmsRofuTController {
         return ResultData.success(isdel);
     }
 
-    // 改 貌似没有需要修改的字段...备注？
-
-
-    // 查 设置用户角色页面用于展示勾选了那些角色 不需要分页
-    //@PostMapping("/rofulist")
-    public ResultData rofuList(@RequestBody UpmsUserT userT){
-        //查两次，第一次查用户勾选了那些角色，第二次查全部的角色，创建返回实体进行标记返回格式数据。  想法1
-        /**
-         * 暂未完成
-         */
-        List<UpmsRofuTQuery> rofulist =upmsRofuTService.listRofu(userT);
-        return ResultData.success(rofulist);
-    }
-
     /**
-     * | 也可以添加通过id查询单个 用于查看备注？
-     * @param id
-     * @return
+     * 改 需要修改的字段...备注
+     * @param rofu  rofu对象
+     * @return      是否
      */
-    @PostMapping("/findrofu")
-    public ResultData findRofu(@RequestParam("id") int id){
-
-        UpmsRofuT upmsRofuT = upmsRofuTService.getById(id);
-
-        return ResultData.success(upmsRofuT);
+    @PostMapping("/editrofu")
+    public ResultData editRofu(@RequestBody UpmsRofuT rofu){
+        boolean isEdit = upmsRofuTService.updateById(rofu);
+        return ResultData.success(isEdit);
     }
+
+
 
     /**
      * 通过用户id-->uid查询全部与之绑定的角色对象（非角色id）
+     * 绑定的使用isSelect = true标识
      * @param uid  用户id
      * @return     格式化对象
      */
-    public ResultData findUserRole(@RequestParam("uid") int uid){
+    @GetMapping("/findrofu")
+    public ResultData findUserRole(@RequestParam("uid") String uid){
 
-        List<UpmsRoleT> upmsRoleTList = upmsRofuTService.listRole(uid);
-
-
+        List<UpmsRofuTQuery> upmsRoleTList = upmsRofuTService.listRofu(uid);
+        for (UpmsRofuTQuery rofu:upmsRoleTList) {
+            System.out.println(rofu.toString());
+        }
         return ResultData.success(upmsRoleTList);
     }
 

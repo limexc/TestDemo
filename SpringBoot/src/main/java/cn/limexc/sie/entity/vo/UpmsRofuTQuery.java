@@ -1,6 +1,7 @@
 package cn.limexc.sie.entity.vo;
 
 import cn.limexc.sie.entity.UpmsRofuT;
+import cn.limexc.sie.entity.UpmsRoleT;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import org.apache.ibatis.type.JdbcType;
@@ -17,12 +18,15 @@ import java.util.Date;
 @Data
 public class UpmsRofuTQuery extends UpmsRofuT {
 
-    private boolean isSelect;
-    private Integer roleId;
-    private Integer roleNo;
-    private String roleName;
-    private Date roleStartTime;
-    private Date roleStopTime;
-    private String roleStatus;
+    boolean isSelect = false;
+    UpmsRoleT upmsRoleT;
 
+
+    @Override
+    public String toString() {
+        return "UpmsRofuTQuery{" +
+                "isSelect=" + isSelect +
+                ", upmsRoleT=" + upmsRoleT +
+                '}';
+    }
 }

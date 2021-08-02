@@ -11,7 +11,7 @@ import com.github.pagehelper.Page;
  * UPMS权限管理系统用户信息表 服务类
  * </p>
  *
- * @author testjava
+ * @author 贤致源
  * @since 2021-07-27
  */
 public interface UpmsUserTService extends IService<UpmsUserT> {

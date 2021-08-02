@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * UPMS权限管理系统用户信息表 Mapper 接口
  * </p>
  *
- * @author testjava
+ * @author 贤致源
  * @since 2021-07-27
  */
 @Mapper

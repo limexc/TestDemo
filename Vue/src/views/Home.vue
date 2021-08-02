@@ -16,8 +16,14 @@
     <el-container>
       <!--侧边栏-->
       <el-aside width="200px">
-        <v-menu navigation-item v-for="(menu,i) in menu" :key="i" :item="menu"></v-menu>
+        <v-menu ref="navmenu" :default-active="$router.history.current.path" router unique-opened class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen" @close="handleClose" :collapse="collapsed">
+          <menu-tree v-for="item in navTree" :key="item.id" :menu="item"></menu-tree>
+        </v-menu>
       </el-aside>
+
+
+
+
 
       <el-container>
         <!--主体-->

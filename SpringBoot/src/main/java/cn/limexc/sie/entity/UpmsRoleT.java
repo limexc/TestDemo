@@ -14,14 +14,14 @@ import org.apache.ibatis.type.JdbcType;
  * UPMS权限管理 角色信息表
  * </p>
  *
- * @author testjava
+ * @author 贤致源
  * @since 2021-07-27
  */
 @Data
 @Accessors(chain = true)
 @KeySequence(value = "UPMS_ROLE_S")
 @TableName("UPMS_ROLE_T")
-public class UpmsRoleT extends BaseEntity {//Model<UpmsRoleT>
+public class UpmsRoleT extends BaseEntity<UpmsRoleT> {//Model<UpmsRoleT>
 
     private static final long serialVersionUID = 1L;
 
@@ -61,6 +61,7 @@ public class UpmsRoleT extends BaseEntity {//Model<UpmsRoleT>
      */
     @TableField(value = "ROLE_NOTE",jdbcType = JdbcType.VARCHAR)
     private String roleNote;
+
     @TableField(value = "ROLE_BACK1",jdbcType = JdbcType.VARCHAR)
     private String roleBack1;
     @TableField(value = "ROLE_BACK2",jdbcType = JdbcType.VARCHAR)

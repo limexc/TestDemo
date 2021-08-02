@@ -22,7 +22,7 @@ import java.util.List;
  * UPMS权限管理 菜单表 服务实现类
  * </p>
  *
- * @author testjava
+ * @author 贤致源
  * @since 2021-07-27
  */
 @Service
@@ -35,6 +35,8 @@ public class UpmsMenuTServiceImpl extends ServiceImpl<UpmsMenuTMapper, UpmsMenuT
 
     @Override
     public List<IndexSub> getMenuTree() {
+
+        //====修改想法1 封装为方法，使用递归进行调用，用来简化代码===\\
         //查询所有1级分类  menuType==目录
         QueryWrapper<UpmsMenuT> wrapperIndex = new QueryWrapper<>();
         wrapperIndex.eq("menu_type","目录");
@@ -84,6 +86,7 @@ public class UpmsMenuTServiceImpl extends ServiceImpl<UpmsMenuTMapper, UpmsMenuT
             }
             indexSub.setChildren(finalMenuList);
         }
+        //===END===\\
 
         return finalIndexList;
     }
