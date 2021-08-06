@@ -1,5 +1,6 @@
 package cn.limexc.sie.handler;
 
+import cn.limexc.sie.exception.UserException;
 import cn.limexc.sie.util.ResponseCode;
 import cn.limexc.sie.util.ResultData;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Description 统一异常处理
  * @Version 0.0.1
  * @Email zhiyuanxzy@gmail.com
- * @Author ADMIN
+ * @Author 贤致源
  * @Create 2021/7/28 10:43
  */
 @ControllerAdvice
@@ -42,6 +43,13 @@ public class GlobaExceptionHandler {
     public ResultData error(org.springframework.dao.DataIntegrityViolationException e){
         e.printStackTrace();
         return ResultData.fail(ResponseCode.ERROR.val(), "数据格式错误");
+    }
+
+    @ExceptionHandler(UserException.class)
+    @ResponseBody
+    public ResultData error(UserException e){
+        e.printStackTrace();
+        return ResultData.fail(ResponseCode.ERROR.val(),e.getMsg());
     }
 
 }

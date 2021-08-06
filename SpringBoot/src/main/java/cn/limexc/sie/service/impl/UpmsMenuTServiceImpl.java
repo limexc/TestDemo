@@ -81,7 +81,7 @@ public class UpmsMenuTServiceImpl extends ServiceImpl<UpmsMenuTMapper, UpmsMenuT
                         finalFunSub.add(funSub);
                     }
                 }
-                menuSub.setChildren2(finalFunSub);
+                menuSub.setChildren(finalFunSub);
 
             }
             indexSub.setChildren(finalMenuList);

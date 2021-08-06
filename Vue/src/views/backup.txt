@@ -1,0 +1,107 @@
+data() {
+    return{
+      currentPage1: 5,
+
+      menuData: [
+        {
+          index: '/',
+          icon: 'el-icon-menu',
+          title: '导航',
+          id: 1,
+        },
+        {
+          index: '/one',
+          icon: 'el-icon-menu',
+          title: '导航二',
+          id: 2,
+          children: [
+            {
+              index: '/one',
+              title: '导航二选项1',
+              id: 2 - 1,
+            },
+            {
+              index: '/two',
+              title: '导航二选项2',
+              id: 2 - 2,
+            }
+          ]
+        },
+        {
+          index: '/two1',
+          icon: 'el-icon-menu',
+          title: '导航三',
+          id: 3,
+          children: [
+            {
+              index: '/two1',
+              title: '导航三选项1',
+              id: 3 - 1,
+            },
+            {
+              index: '/two2',
+              title: '导航三选项2',
+              id: 3 - 2,
+            },
+            {
+              index: '/two31',
+              title: '导航三选项3',
+              id: 3 - 3,
+              children: [
+                {
+                  index: '/two31',
+                  title: '导航三选项111',
+                  id: 3 - 3 - 1,
+                },
+                {
+                  index: '/two32',
+                  title: '导航三选项222',
+                  id: 3 - 3 - 2,
+                  children: [
+                    {
+                      index: '/two321',
+                      title: '导航三选项222-1',
+                      id: 3 - 3 - 2 - 1,
+                    },
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+      ]
+    }
+
+
+
+
+
+  },
+
+
+
+
+
+
+
+
+
+
+  data: {
+      pagesize:"[5, 10, 15]",
+      currentPage: 1,
+      total:"",
+    },
+    methods: {
+      //分页的方法
+
+
+
+
+
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      },

@@ -50,6 +50,7 @@ public class UpmsUserTController {
             @RequestParam(value = "limit",defaultValue = "5")  int limit,
             @ApiParam(name = "upmsUserTQuery",value = "查询条件",required = false)
             @RequestBody(required = true)UpmsUserTQuery upmsUserTQuery){
+        System.out.println("current: "+current+" limit: "+limit);
         //创建page对象
         Page<UpmsUserT> userTPage = new Page<UpmsUserT>(current,limit);
         //构建条件
@@ -58,32 +59,36 @@ public class UpmsUserTController {
         String userAlias = upmsUserTQuery.getUserAlias();
         String userName = upmsUserTQuery.getUserName();
         String userStatus = upmsUserTQuery.getUserStatus();
-        Date creationDate = upmsUserTQuery.getCreationDate();
-        Date lastUpdatedDate = upmsUserTQuery.getLastUpdatedDate();
+        Date beginDate = upmsUserTQuery.getBeginDate();
+        Date endDate = upmsUserTQuery.getEndDate();
         //判断条件是否为空，如果不为空则拼接条件
         if (!StringUtils.isEmpty(userAlias)){
             wrapper.like("user_alias",userAlias);
         }
         if (!StringUtils.isEmpty(userName)){
-            wrapper.eq("user_name",userName);
+            wrapper.like("user_name",userName);
         }
         if (!StringUtils.isEmpty(userStatus)){
             wrapper.eq("user_status",userStatus);
         }
-        if (!StringUtils.isEmpty(creationDate)){
-            wrapper.ge("creation_date",creationDate);
+        if (!StringUtils.isEmpty(beginDate)){
+            wrapper.ge("creation_date",beginDate);
         }
-        if (!StringUtils.isEmpty(lastUpdatedDate)){
-            wrapper.le("last_updated_date",lastUpdatedDate);
+        if (!StringUtils.isEmpty(endDate)){
+            wrapper.le("creation_date",endDate);
         }
 
         //调用方法实现条件查询分页
         upmsUserTService.page(userTPage,wrapper);
         //总记录数
-        long total = userTPage.getTotal();
+        String total = String.valueOf(userTPage.getTotal());
 
         List<UpmsUserT> records = userTPage.getRecords();
-        return ResultData.success(records);
+        //密码不回传  这是查询的时候没搞好
+        for (int i=0;i<records.size();i++){
+            records.set(i, records.get(i).setUserPasswd(""));
+        }
+        return ResultData.success(records,total);
     }
 
     /**
@@ -92,7 +97,7 @@ public class UpmsUserTController {
      * @return               格式化数据
      */
     @ApiOperation("添加用户")
-    @PostMapping("/addUser")
+    @PostMapping("/adduser")
     public ResultData addUser(
             @ApiParam(name = "UpmsUserT",value = "用户信息",required = true)
             @RequestBody UpmsUserT upmsUserT){
@@ -101,7 +106,6 @@ public class UpmsUserTController {
         try {
             //用来判断传入的数据是否符合要求
             if (upmsUserT!=null){
-
 
                 if (upmsUserT.getUserPasswd()!=""){
                     upmsUserT.setUserPasswd(
@@ -142,15 +146,20 @@ public class UpmsUserTController {
     @PostMapping("/edituser")
     public ResultData editUser(@RequestBody UpmsUserT upmsUserT){
         boolean change = false;
+        UpmsUserT user = null;
+        user=upmsUserTService.getById(upmsUserT.getUserId());
         try{
             //用来判断传入的数据是否符合要求  后面单独抽取
             if (upmsUserT!=null){
                 if (upmsUserT.getUserPasswd()!=""){
                     upmsUserT.setUserPasswd(
-                            //用户密码加密存储
-                            SecureUtil.md5(upmsUserT.getUserPasswd())
+                        //用户密码加密存储
+                        SecureUtil.md5(upmsUserT.getUserPasswd())
                     );
+                }else {
+                    upmsUserT.setUserPasswd(user.getUserPasswd());
                 }
+                upmsUserT.setLastUpdatedDate(null);
 
 
 
@@ -169,23 +178,21 @@ public class UpmsUserTController {
 
     /**
      * 删除用户 逻辑删除 将DeleteFlage置为Y
-     * @param id      用户id
+     * @param ids      用户id
      * @return        返回格式化数据
      */
     @ApiOperation("删除用户 逻辑删除")
     @DeleteMapping("/deluser")
     public ResultData removeUser(
-            @ApiParam(name = "id",value = "用户id",required = true)
-            @RequestParam("id") String id){
-        System.out.println(id);
-        boolean isDelete = false;
+            @ApiParam(name = "ids",value = "用户ids",required = true)
+            @RequestBody List<String> ids){
+        System.out.println(ids.toString());
+
         try {
-            isDelete = upmsUserTService.removeById(id);
-            if (isDelete){
-                return ResultData.success(isDelete);
-            }else {
-                return ResultData.fail(ResponseCode.ERROR.val(), "删除失败");
+            for (int i=0;i<ids.size();i++){
+                upmsUserTService.removeById(ids.get(i));
             }
+            return ResultData.success(true);
         }catch (Exception e){
             return ResultData.fail(ResponseCode.ERROR.val(), "删除失败");
         }

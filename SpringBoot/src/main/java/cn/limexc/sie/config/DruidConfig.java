@@ -17,7 +17,7 @@ import java.util.Map;
  * @Description 配置Druid的监控
  * @Version 1.0.0
  * @Email zhiyuanxzy@gmail.com
- * @Author ADMIN
+ * @Author 贤致源
  * @Create 2021/7/20 11:50
  */
 @Configuration
@@ -39,7 +39,7 @@ public class DruidConfig {
         ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
         Map<String, String> initParams = new HashMap<String, String>();
 
-        initParams.put("loginUsername", "admin");
+        initParams.put("loginUsername", "贤致源");
         initParams.put("loginPassword", "1111");
         //默认就是允许所有访问
         initParams.put("allow", "");

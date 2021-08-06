@@ -11,7 +11,7 @@ import java.util.List;
  * @Description 用于角色权限表。
  * @Version 0.0.1
  * @Email zhiyuanxzy@gmail.com
- * @Author ADMIN
+ * @Author 贤致源
  * @Create 2021/8/2 14:21
  */
 @Mapper

@@ -107,28 +107,29 @@ public class UpmsRoleTController {
             @RequestParam(value = "current",required = false,defaultValue = "1") int current,
             @ApiParam(name = "limit",value = "分页大小",required = true)
             @RequestParam(value = "limit",required = false,defaultValue = "5") int limit,
-            @ApiParam(name = "upmsUserTQuery",value = "查询条件",required = false)
-            @RequestBody(required = true) UpmsRoleTQuery upmsRoleTQuery){
+            @ApiParam(name = "upmsUserTQuery",value = "查询条件")
+            @RequestBody(required = false) UpmsRoleTQuery upmsRoleTQuery){
         //创建page对象
         Page<UpmsRoleT> userTPage = new Page<UpmsRoleT>(current,limit);
         //构建条件
         QueryWrapper<UpmsRoleT> wrapper = new QueryWrapper<UpmsRoleT>();
         //多条件组合查询
-        String roleName = upmsRoleTQuery.getRoleName();
-        String roleStatus = upmsRoleTQuery.getRoleStatus();
-        int roleId = upmsRoleTQuery.getRoleId();
+        if (upmsRoleTQuery!=null){
+            String roleName = upmsRoleTQuery.getRoleName();
+            String roleStatus = upmsRoleTQuery.getRoleStatus();
+            int roleId = upmsRoleTQuery.getRoleId();
 
-        //判断条件是否为空，如果不为空则拼接条件
-        if (!StringUtils.isEmpty(roleName)){
-            wrapper.like("role_name",roleName);
+            //判断条件是否为空，如果不为空则拼接条件
+            if (!StringUtils.isEmpty(roleName)){
+                wrapper.like("role_name",roleName);
+            }
+            if (!StringUtils.isEmpty(roleStatus)){
+                wrapper.eq("role_status",roleStatus);
+            }
+            if (roleId!=0){
+                wrapper.eq("role_id",roleId);
+            }
         }
-        if (!StringUtils.isEmpty(roleStatus)){
-            wrapper.eq("role_status",roleStatus);
-        }
-        if (roleId!=0){
-            wrapper.eq("role_id",roleId);
-        }
-
 
         //调用方法实现条件查询分页
         upmsRoleTService.page(userTPage,wrapper);
@@ -136,7 +137,7 @@ public class UpmsRoleTController {
         long total = userTPage.getTotal();
 
         List<UpmsRoleT> records = userTPage.getRecords();
-        return ResultData.success(records);
+        return ResultData.success(records,String.valueOf(total));
 
     }
 

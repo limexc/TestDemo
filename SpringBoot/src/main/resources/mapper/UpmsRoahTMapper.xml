@@ -4,7 +4,7 @@
 <mapper namespace="cn.limexc.sie.mapper.UpmsRoahTMapper">
 
 
-    <insert id="insertRoahList" parameterType="cn.limexc.sie.entity.vo.UpmsRoahTVO">
+    <insert id="insertRoahList" parameterType="cn.limexc.sie.entity.vo.UpmsRoahTVo">
         insert into UPMS_ROAH_T
         (
              ROAH_ID, ROAH_AUTHID, ROAH_ROLEID, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY,
@@ -16,7 +16,7 @@
         </foreach>
     </insert>
 
-    <update id="updateRoahList"  parameterType="cn.limexc.sie.entity.vo.UpmsRoahTVO">
+    <update id="updateRoahList"  parameterType="cn.limexc.sie.entity.vo.UpmsRoahTVo">
         update UPMS_ROAH_T set DELETE_FLAG = "Y" where ROAH_ROLEID=#{rid} in(
         <foreach collection="aIds" item="item" index="index" separator=",">
             ROAH_AUTHID=#{item}

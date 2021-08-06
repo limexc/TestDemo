@@ -1,18 +1,17 @@
 package cn.limexc.sie.service.impl;
 
 import cn.limexc.sie.entity.UpmsAuthT;
-import cn.limexc.sie.entity.UpmsMenuT;
 import cn.limexc.sie.entity.UpmsRoahT;
-import cn.limexc.sie.entity.UpmsRoleT;
-import cn.limexc.sie.entity.vo.UpmsRoahTVO;
+import cn.limexc.sie.entity.subject.IndexSub;
+import cn.limexc.sie.entity.vo.AuthListTree;
+import cn.limexc.sie.entity.vo.UpmsRoahTVo;
 import cn.limexc.sie.mapper.UpmsAuthTMapper;
 import cn.limexc.sie.mapper.UpmsRoahTMapper;
-import cn.limexc.sie.mapper.UpmsRoleTMapper;
+import cn.limexc.sie.service.UpmsMenuTService;
 import cn.limexc.sie.service.UpmsRoahTService;
-import cn.limexc.sie.service.UpmsRoleTService;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +32,13 @@ public class UpmsRoahTServiceImpl extends ServiceImpl<UpmsRoahTMapper, UpmsRoahT
     private UpmsRoahTMapper roahTMapper;
 
     @Autowired
+    private UpmsMenuTService menuTService;
+
+    @Autowired
     private UpmsAuthTMapper authTMapper;
 
     @Override
-    public boolean addRoleAuth(UpmsRoahTVO roahTVO) {
+    public boolean addRoleAuth(UpmsRoahTVo roahTVO) {
         int rows = roahTMapper.insertRoahList(roahTVO.getRoleId(), roahTVO.getAuthIds());
         if (rows>0){
             return true;
@@ -45,7 +47,7 @@ public class UpmsRoahTServiceImpl extends ServiceImpl<UpmsRoahTMapper, UpmsRoahT
     }
 
     @Override
-    public boolean editRoleAuth(UpmsRoahTVO roahTVO) {
+    public boolean editRoleAuth(UpmsRoahTVo roahTVO) {
         //要包含从某个角色中删除权限，即前端用户取消勾选某一权限。
         //如果之前已经存在不修改，若不存在就插入，若List中不存在就删除
         //获得当前角色已经勾选的权限，对比list
@@ -100,15 +102,37 @@ public class UpmsRoahTServiceImpl extends ServiceImpl<UpmsRoahTMapper, UpmsRoahT
     }
 
     @Override
-    public List<UpmsAuthT> listRoleAuth(String rid) {
+    public AuthListTree listRoleAuth(String rid) {
         QueryWrapper<UpmsRoahT> roahWrapper = new QueryWrapper<>();
         roahWrapper.eq("ROAH_ROLEID",rid);
         List<UpmsRoahT> roahTList = baseMapper.selectList(roahWrapper);
+        List<Integer> checkedKeys = new ArrayList<>();
+        //要通过authid查找menuid
+        for (int i=0;i<roahTList.size();i++){
 
-        QueryWrapper<UpmsAuthT> authWrapper = new QueryWrapper<>();
-        List<UpmsAuthT> authTList = authTMapper.selectList(authWrapper);
+        }
         //===========看看前端需要什么样的数据===UpmsAuthTVo===========\\
+//        {
+//          id: 1,
+//            label: '一级 1',
+//            children: [{
+//              id: 4,
+//                label: '二级 1-1',
+//                children: [{
+//                  id: 9,
+//                  label: '三级 1-1-1'
+//                }, {
+//                  id: 10,
+//                  label: '三级 1-1-2'
+//              }]
+//          }]
+//        }
+        //返回菜单列表,再查出被选中的id list进行返回
+        List<IndexSub> menuList = menuTService.getMenuTree();
+        AuthListTree authListTree = new AuthListTree();
+        authListTree.setTreeDate(menuList);
 
-        return null;
+
+        return authListTree;
     }
 }

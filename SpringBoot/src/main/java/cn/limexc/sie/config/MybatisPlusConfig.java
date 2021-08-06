@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @Description [类说明]
  * @Version 0.0.1
  * @Email zhiyuanxzy@gmail.com
- * @Author ADMIN
+ * @Author 贤致源
  * @Create 2021/7/27 16:00
  */
 @Configuration

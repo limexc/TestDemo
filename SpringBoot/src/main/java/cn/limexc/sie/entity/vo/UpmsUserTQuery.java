@@ -11,7 +11,7 @@ import java.util.Date;
  * @Description [类说明]
  * @Version 0.0.1
  * @Email zhiyuanxzy@gmail.com
- * @Author ADMIN
+ * @Author 贤致源
  * @Create 2021/7/28 0:50
  */
 @Data
@@ -21,8 +21,8 @@ public class UpmsUserTQuery {
     private String userAlias;
     private String userName;
     private String userStatus;
-    private Date creationDate;
-    private Date lastUpdatedDate;
+    private Date beginDate;
+    private Date endDate;
     private int userId;
 
 }

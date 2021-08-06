@@ -50,8 +50,8 @@ public class UpmsMenuT extends BaseEntity {//Model<UpmsMenuT>
     /**
      * 菜单标识
      */
-    @TableField(value = "MENU_FLAGE",jdbcType = JdbcType.VARCHAR)
-    private String menuFlage;
+    @TableField(value = "MENU_FLAG",jdbcType = JdbcType.VARCHAR)
+    private String menuFlag;
     /**
      * 菜单地址
      */

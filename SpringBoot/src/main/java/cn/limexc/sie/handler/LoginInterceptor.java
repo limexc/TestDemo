@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
  * @Description [类说明]
  * @Version 0.0.1
  * @Email zhiyuanxzy@gmail.com
- * @Author ADMIN
+ * @Author 贤致源
  * @Create 2021/7/21 17:35
  */
 public class LoginInterceptor implements HandlerInterceptor {

@@ -2,8 +2,8 @@ package cn.limexc.sie.service;
 
 import cn.limexc.sie.entity.UpmsAuthT;
 import cn.limexc.sie.entity.UpmsRoahT;
-import cn.limexc.sie.entity.UpmsRoleT;
-import cn.limexc.sie.entity.vo.UpmsRoahTVO;
+import cn.limexc.sie.entity.vo.AuthListTree;
+import cn.limexc.sie.entity.vo.UpmsRoahTVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -19,10 +19,10 @@ import java.util.List;
  */
 public interface UpmsRoahTService extends IService<UpmsRoahT> {
 
-    boolean addRoleAuth(UpmsRoahTVO roahTVO);
+    boolean addRoleAuth(UpmsRoahTVo roahTVO);
 
-    boolean editRoleAuth(UpmsRoahTVO roahTVO);
+    boolean editRoleAuth(UpmsRoahTVo roahTVO);
 
-    List<UpmsAuthT> listRoleAuth(String rid);
+    AuthListTree listRoleAuth(String rid);
 
 }

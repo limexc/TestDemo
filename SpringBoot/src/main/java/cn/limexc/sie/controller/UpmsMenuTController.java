@@ -121,6 +121,10 @@ public class UpmsMenuTController {
         Page<UpmsMenuT> menuTPage = new Page<UpmsMenuT>(current,limit);
         //构建条件
         QueryWrapper<UpmsMenuT> wrapper = new QueryWrapper<UpmsMenuT>();
+
+        if (upmsMenuTQuery!=null){
+
+        }
         //多条件组合查询
         String menuName = upmsMenuTQuery.getMenuName();
         String menuType = upmsMenuTQuery.getMenuType();
@@ -147,7 +151,7 @@ public class UpmsMenuTController {
         //总记录数
         long total = menuTPage.getTotal();
         List<UpmsMenuT> records = menuTPage.getRecords();
-        return ResultData.success(records);
+        return ResultData.success(records,String.valueOf(total));
     }
 
 

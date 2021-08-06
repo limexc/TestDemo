@@ -1,19 +1,11 @@
 package cn.limexc.sie.controller;
 
 
-import cn.limexc.sie.entity.UpmsAuthT;
-import cn.limexc.sie.entity.vo.UpmsRoahTVO;
-import cn.limexc.sie.service.UpmsAuthTService;
+import cn.limexc.sie.entity.vo.UpmsRoahTVo;
 import cn.limexc.sie.service.UpmsRoahTService;
 import cn.limexc.sie.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.print.DocFlavor;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -40,7 +32,7 @@ public class UpmsRoahTController {
      */
     @PostMapping("/addroah")
     public ResultData addRoah(
-            @RequestBody UpmsRoahTVO roahTVO){
+            @RequestBody UpmsRoahTVo roahTVO){
 
         boolean isSave = roahTService.addRoleAuth(roahTVO);
 
@@ -58,7 +50,7 @@ public class UpmsRoahTController {
      * @return         状态
      */
     @PostMapping("/editroah")
-    public ResultData editRoah(@RequestBody UpmsRoahTVO roahTVO){
+    public ResultData editRoah(@RequestBody UpmsRoahTVo roahTVO){
         boolean isEdit = roahTService.editRoleAuth(roahTVO);
         return ResultData.success(isEdit);
     }

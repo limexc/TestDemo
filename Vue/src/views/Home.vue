@@ -16,9 +16,9 @@
     <el-container>
       <!--侧边栏-->
       <el-aside width="200px">
-        <v-menu ref="navmenu" :default-active="$router.history.current.path" router unique-opened class="el-menu-vertical-demo" @select="handleSelect" @open="handleOpen" @close="handleClose" :collapse="collapsed">
-          <menu-tree v-for="item in navTree" :key="item.id" :menu="item"></menu-tree>
-        </v-menu>
+        <el-menu class="el-menu-vertical-demo" default-active="2" @select="handleSelect">
+          <menu-tree :menuData="menuData"></menu-tree>
+        </el-menu>
       </el-aside>
 
 
@@ -30,17 +30,7 @@
         <el-main>
           <!---->
           <v-user-manage></v-user-manage>
-          <template>
-            <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage4"
-                :page-sizes="[5, 10, 15]"
-                :page-size="10"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="40">
-            </el-pagination>
-          </template>
+
           <!---->
         </el-main>
 
@@ -93,28 +83,14 @@
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
 
-
-import VMenu from "../components/Menu";
 import VUserManage from "../components/UserManage"
+import MenuTree from '../components/MenuTree'
 
 export default {
   name: 'Home',
-  components: {VUserManage, VMenu},
-  data() {
-    return{
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4
-    }
-  },
-  methods: {
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-    }
+  components: {VUserManage, MenuTree},
+  methods:{
+    handleSelect(){}
   }
 };
 </script>

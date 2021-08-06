@@ -1,6 +1,6 @@
 package cn.limexc.sie;
 
-import cn.limexc.sie.entity.vo.UpmsRoahTVO;
+import cn.limexc.sie.entity.vo.UpmsRoahTVo;
 import cn.limexc.sie.mapper.UpmsRofuTMapper;
 import cn.limexc.sie.service.UpmsRoahTService;
 import cn.limexc.sie.service.UpmsRofuTService;
@@ -15,7 +15,7 @@ import java.util.List;
  * @Description [类说明]
  * @Version
  * @Email zhiyuanxzy@gmail.com
- * @Author ADMIN
+ * @Author 贤致源
  * @Create 2021/7/30 13:47
  */
 @SpringBootTest
@@ -29,7 +29,7 @@ public class RoahTest {
 
     @Test
     public void listRoahTest(){
-        UpmsRoahTVO roahTVO = new UpmsRoahTVO();
+        UpmsRoahTVo roahTVO = new UpmsRoahTVo();
         List<String> as = new ArrayList<>();
         as.add("2");
         as.add("3");

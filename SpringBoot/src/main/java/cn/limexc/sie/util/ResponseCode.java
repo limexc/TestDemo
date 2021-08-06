@@ -4,7 +4,7 @@ package cn.limexc.sie.util;
  * @Description code码封装枚举类
  * @Version 0.0.1
  * @Email zhiyuanxzy@gmail.com
- * @Author ADMIN
+ * @Author 贤致源
  * @Create 2021/7/26 8:40
  */
 public enum ResponseCode {
