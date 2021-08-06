@@ -52,12 +52,12 @@
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
-        <!-- Spring Security依赖 -->
+        <!-- Spring Security依赖
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
+        -->
 
         <!--spring boot 测试-->
         <dependency>

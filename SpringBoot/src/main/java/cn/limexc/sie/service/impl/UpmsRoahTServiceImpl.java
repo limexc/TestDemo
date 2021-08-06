@@ -128,9 +128,9 @@ public class UpmsRoahTServiceImpl extends ServiceImpl<UpmsRoahTMapper, UpmsRoahT
 //          }]
 //        }
         //返回菜单列表,再查出被选中的id list进行返回
-        List<IndexSub> menuList = menuTService.getMenuTree();
+        //List<IndexSub> menuList = menuTService.getMenuTree();
         AuthListTree authListTree = new AuthListTree();
-        authListTree.setTreeDate(menuList);
+        //authListTree.setTreeDate(menuList);
 
 
         return authListTree;

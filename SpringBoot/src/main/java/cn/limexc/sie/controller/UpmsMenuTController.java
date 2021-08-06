@@ -1,27 +1,19 @@
 package cn.limexc.sie.controller;
 
 
-import cn.hutool.crypto.SecureUtil;
 import cn.limexc.sie.entity.UpmsMenuT;
-import cn.limexc.sie.entity.UpmsUserT;
-import cn.limexc.sie.entity.subject.IndexSub;
 import cn.limexc.sie.entity.vo.UpmsMenuTQuery;
-import cn.limexc.sie.entity.vo.UpmsUserTQuery;
 import cn.limexc.sie.service.UpmsMenuTService;
 import cn.limexc.sie.util.RemoveTreeNodeUtil;
 import cn.limexc.sie.util.ResponseCode;
 import cn.limexc.sie.util.ResultData;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.injector.methods.Insert;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiParam;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.DocFlavor;
 import java.util.*;
 
 /**
@@ -154,11 +146,18 @@ public class UpmsMenuTController {
         return ResultData.success(records,String.valueOf(total));
     }
 
-
+/**
     @GetMapping("/getmenu")
     public ResultData getTreeMenu(){
         //list集合泛型为1级分类  目录 --  菜单
         List<IndexSub> list =upmsMenuTService.getMenuTree();
+
+        return ResultData.success(list);
+    }
+*/
+    @GetMapping("/getmenutree")
+    public ResultData getTreeMenu(){
+        List<UpmsMenuT> list = upmsMenuTService.queryAllMenu();
 
         return ResultData.success(list);
     }

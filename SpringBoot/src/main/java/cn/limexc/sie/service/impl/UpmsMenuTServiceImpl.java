@@ -33,6 +33,10 @@ public class UpmsMenuTServiceImpl extends ServiceImpl<UpmsMenuTMapper, UpmsMenuT
     @Autowired
     private UpmsMenuTMapper menuTMapper;
 
+    /**
+     * 暂时弃用,使用下面的递归
+     * @return
+
     @Override
     public List<IndexSub> getMenuTree() {
 
@@ -90,6 +94,7 @@ public class UpmsMenuTServiceImpl extends ServiceImpl<UpmsMenuTMapper, UpmsMenuT
 
         return finalIndexList;
     }
+     */
 
     /**
      @Override
@@ -100,6 +105,48 @@ public class UpmsMenuTServiceImpl extends ServiceImpl<UpmsMenuTMapper, UpmsMenuT
      return false;
      }
      */
+
+    @Override
+    public List<UpmsMenuT> queryAllMenu(){
+        QueryWrapper<UpmsMenuT> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("menu_id");
+        List<UpmsMenuT> menuList = baseMapper.selectList(wrapper);
+
+
+        List<UpmsMenuT> resultList = buildMenu(menuList);
+
+        return resultList;
+    }
+
+    private List<UpmsMenuT> buildMenu(List<UpmsMenuT> menuList) {
+        //遍历list, upper为0的 设置level 1
+        List<UpmsMenuT> finalNode = new ArrayList<>();
+        for (UpmsMenuT menuNode: menuList){
+            if (menuNode.getMenuUpper()==0){
+                menuNode.setLevel(1);
+                finalNode.add(selectChildren(menuNode,menuList));
+            }
+        }
+        return finalNode;
+    }
+
+    private UpmsMenuT selectChildren(UpmsMenuT menuNode, List<UpmsMenuT> menuList) {
+        menuNode.setChildren(new ArrayList<UpmsMenuT>());
+        for (UpmsMenuT it : menuList){
+            if (menuNode.getMenuId().equals(it.getMenuUpper())){
+                int level = menuNode.getLevel()+1;
+                it.setLevel(level);
+                //如果Children为空,初始化
+                if (menuNode.getChildren()==null){
+                    menuNode.setChildren(new ArrayList<UpmsMenuT>());
+                }
+                //将查询出来的子菜单放到父菜单中
+                menuNode.getChildren().add(selectChildren(it,menuList));
+            }
+        }
+        return menuNode;
+
+    }
 
 
 }

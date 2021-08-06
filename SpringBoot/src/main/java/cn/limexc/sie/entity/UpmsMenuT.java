@@ -10,6 +10,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -77,6 +78,29 @@ public class UpmsMenuT extends BaseEntity {//Model<UpmsMenuT>
      */
     @TableField(value = "MENU_NOTE",jdbcType = JdbcType.VARCHAR)
     private String menuNote;
+
+    /**
+     * 暂时不知道干什么的
+     */
+    @ApiModelProperty(value = "权限值")
+    @TableField(exist = false)
+    private String permissionValue;
+
+    /**
+     * 用于生成树形菜单
+     */
+    @ApiModelProperty(value = "层级")
+    @TableField(exist = false)
+    private Integer level;
+
+    @ApiModelProperty(value = "下级")
+    @TableField(exist = false)
+    private List<UpmsMenuT> children;
+
+    @ApiModelProperty(value = "是否选中")
+    @TableField(exist = false)
+    private boolean isSelect;
+
     @TableField(value = "MENU_BACK1",jdbcType = JdbcType.VARCHAR)
     private String menuBack1;
     @TableField(value = "MENU_BACK2",jdbcType = JdbcType.VARCHAR)
