@@ -1,17 +1,12 @@
 package cn.limexc.sie.service.impl;
 
-import cn.limexc.sie.entity.UpmsAuthT;
 import cn.limexc.sie.entity.UpmsRoahT;
-import cn.limexc.sie.entity.subject.IndexSub;
-import cn.limexc.sie.entity.vo.AuthListTree;
 import cn.limexc.sie.entity.vo.UpmsRoahTVo;
-import cn.limexc.sie.mapper.UpmsAuthTMapper;
 import cn.limexc.sie.mapper.UpmsRoahTMapper;
 import cn.limexc.sie.service.UpmsMenuTService;
 import cn.limexc.sie.service.UpmsRoahTService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +29,6 @@ public class UpmsRoahTServiceImpl extends ServiceImpl<UpmsRoahTMapper, UpmsRoahT
     @Autowired
     private UpmsMenuTService menuTService;
 
-    @Autowired
-    private UpmsAuthTMapper authTMapper;
 
     @Override
     public boolean addRoleAuth(UpmsRoahTVo roahTVO) {
@@ -100,7 +93,7 @@ public class UpmsRoahTServiceImpl extends ServiceImpl<UpmsRoahTMapper, UpmsRoahT
         }
         return false;
     }
-
+    /**
     @Override
     public AuthListTree listRoleAuth(String rid) {
         QueryWrapper<UpmsRoahT> roahWrapper = new QueryWrapper<>();
@@ -135,4 +128,5 @@ public class UpmsRoahTServiceImpl extends ServiceImpl<UpmsRoahTMapper, UpmsRoahT
 
         return authListTree;
     }
+    */
 }

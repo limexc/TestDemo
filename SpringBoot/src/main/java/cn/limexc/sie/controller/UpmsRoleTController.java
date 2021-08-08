@@ -29,7 +29,7 @@ import java.util.List;
  * @since 2021-07-27
  */
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/sys/role")
 public class UpmsRoleTController {
 
     @Autowired

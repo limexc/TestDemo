@@ -31,8 +31,8 @@ public class UpmsRoahT extends BaseEntity{//Model<UpmsRofuT>
     /**
      * 权限ID
      */
-    @TableField("ROAH_AUTHID")
-    private Integer roahAuthid;
+    @TableField("ROAH_MENUID")
+    private Integer roahMenuid;
     /**
      * 角色表ID
      */

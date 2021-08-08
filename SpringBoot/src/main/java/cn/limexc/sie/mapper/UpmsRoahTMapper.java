@@ -28,7 +28,7 @@ public interface UpmsRoahTMapper extends BaseMapper<UpmsRoahT> {
     /**
      * 逻辑删除list中的数据
      * @param rid   角色id
-     * @param aIds  权限id列表
+     * @param aIds  权限id列表  即菜单id列表
      * @return      影响的行数
      */
     int updateRoahList(@Param("rid")String rid,@Param("aIds") List<String> aIds);

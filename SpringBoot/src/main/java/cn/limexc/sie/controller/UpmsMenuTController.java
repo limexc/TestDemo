@@ -25,7 +25,8 @@ import java.util.*;
  * @since 2021-07-27
  */
 @RestController
-@RequestMapping("/menu")
+@CrossOrigin
+@RequestMapping("/sys/menu")
 public class UpmsMenuTController {
 
     @Autowired
@@ -45,19 +46,17 @@ public class UpmsMenuTController {
     }
 
 
-    // 删  需要判断该菜单下是否还存在数据
+    /**
+     * 删  需要判断该菜单下是否还存在数据
+     * 此方法需要接受的不应该仅仅是一个id,有可能是一个id的列表,
+     * 用于做批量删除,类似于批量的删除用户
+     * 用一个循环来删除?感觉会很慢,而且一次循环后可能将子节点已经删除了,再次循环会出错误
+     * @param ids  id列表
+     * @return
+     */
     @DeleteMapping("/delmenu")
-    public ResultData delMenu(@RequestParam(value = "id") String id){
-//        QueryWrapper wrapper = new QueryWrapper();
-//        //通过id查找所有父目录为此id的数据  如果该目录的子目录下也有数据？
-//
-//        wrapper.eq("menu_upper",id);
-//        List<UpmsMenuT> records = upmsMenuTService.listObjs(wrapper);
-//        List<String> ids = new ArrayList<String>();
-//        for (UpmsMenuT menu:records) {
-//            ids.add(String.valueOf(menu.getMenuUpper()));
-//        }
-//        ids.add(id);
+    public ResultData delMenu(@RequestParam(value = "ids") String ids){
+
         //获取表全部数据
         List<UpmsMenuT> menuTList = upmsMenuTService.list();
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
@@ -67,7 +66,7 @@ public class UpmsMenuTController {
             }
             map.put(menuT.getMenuId(),menuT.getMenuUpper());
         }
-        List<String> renode = RemoveTreeNodeUtil.RemoveList(map,id);
+        List<String> renode = RemoveTreeNodeUtil.RemoveList(map,ids);
         boolean isDel = upmsMenuTService.removeByIds(renode);
         if (isDel){
             return ResultData.success(isDel);

@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Api("用户管理")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/sys/user")
 public class UpmsUserTController {
 
     @Autowired

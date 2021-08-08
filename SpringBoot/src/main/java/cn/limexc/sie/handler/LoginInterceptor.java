@@ -1,6 +1,10 @@
 package cn.limexc.sie.handler;
 
 import cn.limexc.sie.entity.UpmsUserT;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,6 +19,7 @@ import javax.servlet.http.HttpSession;
  * @Author 贤致源
  * @Create 2021/7/21 17:35
  */
+@Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
@@ -22,15 +27,12 @@ public class LoginInterceptor implements HandlerInterceptor {
         //拦截所有根请求判断是否登录
         //获取请求的URI
         String uri = request.getRequestURI();
-        HttpSession session = request.getSession();
-        UpmsUserT sysUser = (UpmsUserT) session.getAttribute("sysUser");
+       // HttpSession session = request.getSession();
+        //UpmsUserT sysUser = (UpmsUserT) session.getAttribute("sysUser");
 
-
-        System.out.println("用户:"+ " 访问的URI是："+uri);
+        log.info("访问的URI是："+uri);
 
         return true;
-
-
 
         //return HandlerInterceptor.super.preHandle(request, response, handler);
     }

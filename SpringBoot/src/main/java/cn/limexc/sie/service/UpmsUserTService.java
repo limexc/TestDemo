@@ -16,6 +16,8 @@ import com.github.pagehelper.Page;
  */
 public interface UpmsUserTService extends IService<UpmsUserT> {
 
+    UpmsUserT selectByUserAlias(String userAlias);
+
     //void pageQuery(Page<UpmsUserT> pageParam, UpmsUserTQuery UpmsUserTQuery);
 
 }

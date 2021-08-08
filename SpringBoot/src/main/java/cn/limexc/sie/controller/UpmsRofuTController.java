@@ -22,7 +22,7 @@ import java.util.List;
  * @since 2021-07-27
  */
 @RestController
-@RequestMapping("/rofu")
+@RequestMapping("/sys/rofu")
 public class UpmsRofuTController {
 
     @Autowired

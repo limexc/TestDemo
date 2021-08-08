@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2021-07-27
  */
 @RestController
-@RequestMapping("/roah")
+@RequestMapping("/sys/roah")
 public class UpmsRoahTController {
 
     @Autowired

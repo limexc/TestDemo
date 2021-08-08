@@ -1,6 +1,6 @@
 package cn.limexc.sie.service.impl;
 
-import cn.limexc.sie.entity.UpmsMenuT;
+import cn.limexc.sie.entity.*;
 import cn.limexc.sie.entity.subject.FunSub;
 import cn.limexc.sie.entity.subject.IndexSub;
 import cn.limexc.sie.entity.subject.MenuSub;
@@ -8,14 +8,23 @@ import cn.limexc.sie.mapper.UpmsMenuTMapper;
 
 
 import cn.limexc.sie.service.UpmsMenuTService;
+import cn.limexc.sie.service.UpmsRoahTService;
+import cn.limexc.sie.service.UpmsRoleTService;
+import cn.limexc.sie.service.UpmsUserTService;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sun.javafx.tk.PermissionHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Permission;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -26,92 +35,26 @@ import java.util.List;
  * @since 2021-07-27
  */
 @Service
+@Slf4j
 public class UpmsMenuTServiceImpl extends ServiceImpl<UpmsMenuTMapper, UpmsMenuT> implements UpmsMenuTService {
     /**
      *
      */
     @Autowired
     private UpmsMenuTMapper menuTMapper;
+    @Autowired
+    private UpmsUserTService userTService;
+    @Autowired
+    private UpmsRoleTService roleTService;
+    @Autowired
+    private UpmsRoahTService roahTService;
 
-    /**
-     * 暂时弃用,使用下面的递归
-     * @return
-
-    @Override
-    public List<IndexSub> getMenuTree() {
-
-        //====修改想法1 封装为方法，使用递归进行调用，用来简化代码===\\
-        //查询所有1级分类  menuType==目录
-        QueryWrapper<UpmsMenuT> wrapperIndex = new QueryWrapper<>();
-        wrapperIndex.eq("menu_type","目录");
-        List<UpmsMenuT> indexList = baseMapper.selectList(wrapperIndex);
-
-        //查询所有2级分类  menuType==菜单
-        QueryWrapper<UpmsMenuT> wrapperMenu = new QueryWrapper<>();
-        wrapperMenu.eq("menu_type","菜单");
-        List<UpmsMenuT> menuList = baseMapper.selectList(wrapperMenu);
-
-        //查询所有3级分类 menuType==功能
-        QueryWrapper<UpmsMenuT> wrapperFun = new QueryWrapper<>();
-        wrapperFun.eq("menu_type","功能");
-        List<UpmsMenuT> funList = baseMapper.selectList(wrapperFun);
-
-        //创建集合用于封装最后数据
-        List<IndexSub> finalIndexList = new ArrayList<>();
-
-        //封装1级分类
-        for (UpmsMenuT index:indexList) {
-            IndexSub indexSub = new IndexSub();
-            //将index的值复制到indexSub中
-            BeanUtils.copyProperties(index,indexSub);
-            finalIndexList.add(indexSub);
-            //准备封装2级分类
-            List<MenuSub> finalMenuList = new ArrayList<>();
-            //遍历2级分类集合
-            for (UpmsMenuT menu:menuList) {
-                MenuSub menuSub = new MenuSub();
-                //判断二级分类upper与一级分类id是否一致
-                if (menu.getMenuUpper().equals(index.getMenuId())){
-                    BeanUtils.copyProperties(menu,menuSub);
-                    finalMenuList.add(menuSub);
-                }
-                //准备封装3级分类
-                List<FunSub> finalFunSub = new ArrayList<>();
-                //遍历3级分类
-                for (UpmsMenuT fun:funList) {
-                    if (fun.getMenuUpper().equals(menu.getMenuId())){
-                        FunSub funSub = new FunSub();
-                        BeanUtils.copyProperties(fun,funSub);
-                        finalFunSub.add(funSub);
-                    }
-                }
-                menuSub.setChildren(finalFunSub);
-
-            }
-            indexSub.setChildren(finalMenuList);
-        }
-        //===END===\\
-
-        return finalIndexList;
-    }
-     */
-
-    /**
-     @Override
-     public boolean addMenu(UpmsMenuT upmsMenuT) {
-
-     menuTMapper.insert(upmsMenuT);
-
-     return false;
-     }
-     */
 
     @Override
     public List<UpmsMenuT> queryAllMenu(){
         QueryWrapper<UpmsMenuT> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("menu_id");
         List<UpmsMenuT> menuList = baseMapper.selectList(wrapper);
-
 
         List<UpmsMenuT> resultList = buildMenu(menuList);
 
@@ -146,6 +89,81 @@ public class UpmsMenuTServiceImpl extends ServiceImpl<UpmsMenuTMapper, UpmsMenuT
         }
         return menuNode;
 
+    }
+    //=====================================================================\\
+
+    //根据用户id获取用户菜单
+    @Override
+    public List<String> selectMenuValueByUserId(String id) {
+
+        List<String> selectPermissionValueList = new ArrayList<>();
+        if(this.isSysAdmin(id)) {
+            //如果是系统管理员，获取所有权限  即所有菜单名称
+            List<UpmsMenuT> menuTList =baseMapper.selectList(new QueryWrapper<UpmsMenuT>().select("MENU_NAME"));
+            for (UpmsMenuT menuT :menuTList){
+                selectPermissionValueList.add(menuT.getMenuName());
+            }
+        } else {
+            //根据用户id获得 其拥有的角色列表
+            List<UpmsRoleT> roleTList = roleTService.selectRoleByUserId(Integer.parseInt(id));
+
+            //通过角色查询全部包含的 权限(菜单)名称 使用set去重
+            //获取角色的id列表
+            List<Integer> roleIds=new ArrayList<>();
+            if (roleTList.size()>0){
+                for (UpmsRoleT roleT :roleTList){
+                    roleIds.add(roleT.getRoleId());
+                }
+            }
+            //通过角色id查询 角色权限列表
+            List<UpmsRoahT> roahList = roahTService.list(new QueryWrapper<UpmsRoahT>().in("ROAH_ROLEID",roleIds));
+            //List<UpmsRoahT> roahList = roahTService.listByIds(roleIds);
+            //通过id查询全部菜单
+            Set<String> menuSetIds = new HashSet<>();
+            for (UpmsRoahT roahT:roahList){
+                menuSetIds.add(String.valueOf(roahT.getRoahMenuid()));
+            }
+            List<UpmsMenuT> menuTList = menuTMapper.selectBatchIds(menuSetIds);
+
+            if (menuTList.size()>0){
+                for (int i=0;i<menuTList.size();i++){
+                    log.info("该用户可以访问的菜单名称:"+menuTList.get(i).getMenuName());
+                    selectPermissionValueList.add(menuTList.get(i).getMenuName());
+                }
+            }
+
+
+        }
+        return selectPermissionValueList;
+    }
+
+    //@Override
+    //public List<JSONObject> selectPermissionByUserId(String userId) {
+        //List<UpmsMenuT> selectPermissionList = null;
+        //if(this.isSysAdmin(userId)) {
+            //如果是超级管理员，获取所有菜单
+            //selectPermissionList = baseMapper.selectList(null);
+       // } else {
+            //selectPermissionList = (userId);
+       // }
+
+        //List<Permission> permissionList = PermissionHelper.bulid(selectPermissionList);
+        //List<JSONObject> result = MemuHelper.bulid(permissionList);
+        //return result;
+   // }
+
+    /**
+     * 判断用户是否系统管理员
+     * @param userId 用户id
+     * @return       boolean
+     */
+    private boolean isSysAdmin(String userId) {
+        UpmsUserT user = userTService.getById(userId);
+
+        if(null != user && "admin".equals(user.getUserAlias())) {
+            return true;
+        }
+        return false;
     }
 
 

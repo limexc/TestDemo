@@ -22,4 +22,6 @@ public interface UpmsMenuTService extends IService<UpmsMenuT> {
     //List<IndexSub> getMenuTree();
 
     List<UpmsMenuT> queryAllMenu();
+
+    List<String> selectMenuValueByUserId(String id);
 }

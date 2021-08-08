@@ -13,6 +13,7 @@ import cn.limexc.sie.util.JwtUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 
 /**
@@ -31,10 +32,10 @@ public class MemberServiceImpl extends ServiceImpl<UpmsUserTMapper, UpmsUserT> i
         String userPasswd = loginVo.getUserPasswd();
 
         //校验参数
-//        if(StringUtils.isEmpty(userAlias) ||
-//                StringUtils.isEmpty(userPasswd)) {
-//            throw new UserException("请输入用户名或密码");
-//        }
+        if(StringUtils.isEmpty(userAlias) ||
+                StringUtils.isEmpty(userPasswd)) {
+           throw new UserException("请输入用户名或密码");
+        }
 
         //获取用户信息
         UpmsUserT userT = baseMapper.selectOne(
@@ -70,4 +71,7 @@ public class MemberServiceImpl extends ServiceImpl<UpmsUserTMapper, UpmsUserT> i
         BeanUtil.copyProperties(userT,loginInfoVo);
         return loginInfoVo;
     }
+
+
+
 }

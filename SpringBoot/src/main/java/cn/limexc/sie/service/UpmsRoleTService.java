@@ -3,6 +3,8 @@ package cn.limexc.sie.service;
 import cn.limexc.sie.entity.UpmsRoleT;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 
 /**
  * <p>
@@ -14,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UpmsRoleTService extends IService<UpmsRoleT> {
 
+    //根据用户id获取用户角色列表
+    List<UpmsRoleT> selectRoleByUserId(int uid);
 }
