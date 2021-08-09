@@ -42,8 +42,9 @@ public class IndexServiceImpl implements IndexService {
     public Map<String, Object> getUserInfo(String userAlias) {
         Map<String, Object> result = new HashMap<>();
         UpmsUserT user = userService.selectByUserAlias(userAlias);
-        if (null == user) {
-            throw new UserException();
+
+        if (null == user||"Del".equals(user.getUserStatus())) {
+            throw new UserException("用户不存在或已被禁用");
         }
 
         //根据用户id获取角色
@@ -76,9 +77,8 @@ public class IndexServiceImpl implements IndexService {
         UpmsUserT user = userService.selectByUserAlias(userAlias);
 
         //根据用户id获取用户菜单权限
-        List<JSONObject> permissionList = null;
-                //menuService.selectPermissionByUserId(user.getUserId());
-        return permissionList;
+        List<JSONObject> menuList = menuService.selectMenuByUserId(user.getUserId());
+        return menuList;
     }
 
 

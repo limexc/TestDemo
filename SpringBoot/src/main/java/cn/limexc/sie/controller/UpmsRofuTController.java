@@ -5,8 +5,10 @@ import cn.limexc.sie.entity.UpmsRofuT;
 import cn.limexc.sie.entity.UpmsRoleT;
 import cn.limexc.sie.entity.UpmsUserT;
 import cn.limexc.sie.entity.vo.UpmsRofuTQuery;
+import cn.limexc.sie.entity.vo.UpmsRofuVo;
 import cn.limexc.sie.service.UpmsRofuTService;
 import cn.limexc.sie.util.ResultData;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,7 @@ import java.util.List;
  * @author 贤致源
  * @since 2021-07-27
  */
+@Slf4j
 @RestController
 @RequestMapping("/sys/rofu")
 public class UpmsRofuTController {
@@ -70,6 +73,21 @@ public class UpmsRofuTController {
         return ResultData.success(isEdit);
     }
 
+    /**
+     * 该接口用于批量的进行用户角色的绑定与解绑操作.
+     * 通过前端传入的角色id数组与用户id,查找数据库
+     * 若数据已存在  ==>不操作
+     * 若数据不存在  ==>添加
+     * 若数据库多余  ==>删除
+     * @return
+     */
+    @PostMapping("/editrofus")
+    public ResultData editRofus(@RequestBody UpmsRofuVo userRoleVo){
+        log.info(userRoleVo.toString());
+        upmsRofuTService.updataByUidAndRoleList(userRoleVo);
+        return ResultData.success(true);
+    }
+
 
 
     /**
@@ -80,7 +98,9 @@ public class UpmsRofuTController {
      */
     @GetMapping("/findrofu")
     public ResultData findUserRole(@RequestParam("uid") String uid){
-
+        if ("undefined".equals(uid)){
+            return  ResultData.success("");
+        }
         List<UpmsRofuTQuery> upmsRoleTList = upmsRofuTService.listRofu(uid);
         for (UpmsRofuTQuery rofu:upmsRoleTList) {
             System.out.println(rofu.toString());

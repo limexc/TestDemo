@@ -26,8 +26,9 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //拦截所有根请求判断是否登录
         //获取请求的URI
+        //准备使用springsecurity框架解决
         String uri = request.getRequestURI();
-       // HttpSession session = request.getSession();
+        //HttpSession session = request.getSession();
         //UpmsUserT sysUser = (UpmsUserT) session.getAttribute("sysUser");
 
         log.info("访问的URI是："+uri);

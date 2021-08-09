@@ -137,6 +137,12 @@ public class UpmsMenuTServiceImpl extends ServiceImpl<UpmsMenuTMapper, UpmsMenuT
         return selectPermissionValueList;
     }
 
+    //未完成
+    @Override
+    public List<JSONObject> selectMenuByUserId(Integer userId) {
+        return null;
+    }
+
     //@Override
     //public List<JSONObject> selectPermissionByUserId(String userId) {
         //List<UpmsMenuT> selectPermissionList = null;

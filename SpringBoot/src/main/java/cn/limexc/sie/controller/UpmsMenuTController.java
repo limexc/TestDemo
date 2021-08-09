@@ -2,14 +2,17 @@ package cn.limexc.sie.controller;
 
 
 import cn.limexc.sie.entity.UpmsMenuT;
+import cn.limexc.sie.entity.UpmsRoahT;
 import cn.limexc.sie.entity.vo.UpmsMenuTQuery;
 import cn.limexc.sie.service.UpmsMenuTService;
+import cn.limexc.sie.service.UpmsRoahTService;
 import cn.limexc.sie.util.RemoveTreeNodeUtil;
 import cn.limexc.sie.util.ResponseCode;
 import cn.limexc.sie.util.ResultData;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,7 @@ import java.util.*;
  * @author 贤致源
  * @since 2021-07-27
  */
+@Slf4j
 @RestController
 @CrossOrigin
 @RequestMapping("/sys/menu")
@@ -31,6 +35,8 @@ public class UpmsMenuTController {
 
     @Autowired
     private UpmsMenuTService upmsMenuTService;
+    @Autowired
+    private UpmsRoahTService upmsRoahTService;
 
     // 增
     @PostMapping("/addmenu")
@@ -55,7 +61,7 @@ public class UpmsMenuTController {
      * @return
      */
     @DeleteMapping("/delmenu")
-    public ResultData delMenu(@RequestParam(value = "ids") String ids){
+    public ResultData delMenus(@RequestParam(value = "ids") String ids){
 
         //获取表全部数据
         List<UpmsMenuT> menuTList = upmsMenuTService.list();
@@ -95,6 +101,28 @@ public class UpmsMenuTController {
     }
 
 
+    @GetMapping("/uppermenu")
+    public ResultData listUpperMenu(){
+        //需要向前端返回所有二级以上菜单与目录的名称及id
+        //格式{value: 'ID',label: '名称'}
+        //获取系统内的 目录 和 菜单数据
+        QueryWrapper<UpmsMenuT> queryWrapper = new QueryWrapper<UpmsMenuT>();
+        queryWrapper.in("MENU_TYPE","目录","菜单");
+        List<UpmsMenuT> allMenu = upmsMenuTService.list(queryWrapper);
+        List<Map> finalMenuDate = new ArrayList<>();
+        Map map1 = new HashMap();
+        map1.put("value",0);
+        map1.put("label","根目录");
+        finalMenuDate.add(map1);
+        for (UpmsMenuT menuT:allMenu) {
+            Map map = new HashMap();
+            map.put("value",menuT.getMenuId());
+            map.put("label",menuT.getMenuName());
+            finalMenuDate.add(map);
+        }
+
+        return ResultData.success(finalMenuDate);
+    }
 
 
 
@@ -112,10 +140,7 @@ public class UpmsMenuTController {
         Page<UpmsMenuT> menuTPage = new Page<UpmsMenuT>(current,limit);
         //构建条件
         QueryWrapper<UpmsMenuT> wrapper = new QueryWrapper<UpmsMenuT>();
-
-        if (upmsMenuTQuery!=null){
-
-        }
+        log.info("菜单查询条件为:"+upmsMenuTQuery.toString());
         //多条件组合查询
         String menuName = upmsMenuTQuery.getMenuName();
         String menuType = upmsMenuTQuery.getMenuType();
@@ -161,6 +186,21 @@ public class UpmsMenuTController {
         return ResultData.success(list);
     }
 
+    @GetMapping("/menutreeofid")
+    public ResultData getIdTreeMenu(@RequestParam("id") String id){
+        List<UpmsMenuT> list = upmsMenuTService.queryAllMenu();
+        //需要将与id匹配的menu传回,通过msg吧,开始设计的时候不太好,没时间改了
+        //通过角色id获取
+        QueryWrapper<UpmsRoahT> queryWrapper =new QueryWrapper<UpmsRoahT>();
+        queryWrapper.eq("ROAH_ROLEID",id);
+        List<UpmsRoahT> roahTS = upmsRoahTService.list(queryWrapper);
+        List<Integer> finalSelect = new ArrayList<>();
+        for (UpmsRoahT roahT:roahTS) {
+            finalSelect.add(roahT.getRoahMenuid());
+        }
+        log.info(Arrays.toString(finalSelect.toArray()));
+        return ResultData.success(list,Arrays.toString(finalSelect.toArray()));
+    }
 
 }
 

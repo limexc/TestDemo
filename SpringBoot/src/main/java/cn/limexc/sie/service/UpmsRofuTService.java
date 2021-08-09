@@ -4,6 +4,7 @@ import cn.limexc.sie.entity.UpmsRofuT;
 import cn.limexc.sie.entity.UpmsRoleT;
 import cn.limexc.sie.entity.UpmsUserT;
 import cn.limexc.sie.entity.vo.UpmsRofuTQuery;
+import cn.limexc.sie.entity.vo.UpmsRofuVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ public interface UpmsRofuTService extends IService<UpmsRofuT> {
     boolean addRofu(UpmsRofuT upmsRofuT);
 
     List<UpmsRofuTQuery> listRofu(String uid);
+
+    boolean updataByUidAndRoleList(UpmsRofuVo userRoleVo);
 
     //UpmsRoleT getRoleById(int id);
 }

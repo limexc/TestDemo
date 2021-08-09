@@ -17,4 +17,13 @@ public class UpmsMenuTQuery {
     private String menuStatus;
     private int menuId;
 
+    @Override
+    public String toString() {
+        return "UpmsMenuTQuery{" +
+                "menuName='" + menuName + '\'' +
+                ", menuType='" + menuType + '\'' +
+                ", menuStatus='" + menuStatus + '\'' +
+                ", menuId=" + menuId +
+                '}';
+    }
 }

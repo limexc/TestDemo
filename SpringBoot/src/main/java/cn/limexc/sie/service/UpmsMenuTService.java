@@ -2,6 +2,7 @@ package cn.limexc.sie.service;
 
 import cn.limexc.sie.entity.UpmsMenuT;
 import cn.limexc.sie.entity.subject.IndexSub;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface UpmsMenuTService extends IService<UpmsMenuT> {
     List<UpmsMenuT> queryAllMenu();
 
     List<String> selectMenuValueByUserId(String id);
+
+    List<JSONObject> selectMenuByUserId(Integer userId);
 }

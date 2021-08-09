@@ -60,7 +60,8 @@ public class UpmsRoahTServiceImpl extends ServiceImpl<UpmsRoahTMapper, UpmsRoahT
         nextfor:
         for (int i=0;i< oldRoahList.size();i++){
             for (int j=0;j<newRoahList.size();j++){
-                if (oldRoahList.get(i)==oldRoahList.get(j)){
+                //这里之前可能写错了
+                if (oldRoahList.get(i)==newRoahList.get(j)){
                     oldRoahList.remove(i);
                     newRoahList.remove(j);
                     j++;

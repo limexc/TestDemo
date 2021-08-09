@@ -114,7 +114,6 @@ public class UpmsUserTController {
                     );
                 }
 
-
             }
             save = upmsUserTService.save(upmsUserT);
             if (save){
@@ -182,12 +181,10 @@ public class UpmsUserTController {
      * @return        返回格式化数据
      */
     @ApiOperation("删除用户 逻辑删除")
-    @DeleteMapping("/deluser")
-    public ResultData removeUser(
+    @DeleteMapping("/delusers")
+    public ResultData removeUsers(
             @ApiParam(name = "ids",value = "用户ids",required = true)
             @RequestBody List<String> ids){
-        System.out.println(ids.toString());
-
         try {
             for (int i=0;i<ids.size();i++){
                 upmsUserTService.removeById(ids.get(i));
@@ -197,6 +194,20 @@ public class UpmsUserTController {
             return ResultData.fail(ResponseCode.ERROR.val(), "删除失败");
         }
     }
+
+    @ApiOperation("删除用户 逻辑删除")
+    @DeleteMapping("/deluser")
+    public ResultData removeUser(
+            @ApiParam(name = "id",value = "用户id",required = true)
+            @RequestParam("id") String id){
+
+
+        upmsUserTService.removeById(id);
+
+        return ResultData.success(true);
+
+    }
+
 
 }
 

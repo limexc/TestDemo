@@ -59,22 +59,27 @@ public class UpmsRoleTController {
 
 
     // 删
-    @DeleteMapping(value = "/delrole")
-    public ResultData delRole(@ApiParam(name = "id",value = "角色id",required = true)
-                                  @RequestParam(value = "id") String id){
-        boolean isDelete = false;
-        try {
-            isDelete = upmsRoleTService.removeById(id);
-            if (isDelete){
-                return ResultData.success(isDelete);
-            }else {
-                return ResultData.fail(ResponseCode.ERROR.val(), "删除失败");
-            }
-        }catch (Exception e){
-            return ResultData.fail(ResponseCode.ERROR.val(), "删除失败");
+    @DeleteMapping(value = "/delroles")
+    public ResultData delRoles(@ApiParam(name = "ids",value = "角色id",required = true)
+                                  @RequestBody List<String> ids){
+
+        for (int i=0;i<ids.size();i++){
+            upmsRoleTService.removeById(ids.get(i));
         }
+        return ResultData.success(true);
+
     }
 
+    // 删
+    @DeleteMapping(value = "/delrole")
+    public ResultData delRole(@ApiParam(name = "id",value = "角色id",required = true)
+                              @RequestParam("id") String id){
+
+        upmsRoleTService.removeById(id);
+
+        return ResultData.success(true);
+
+    }
 
     // 改
     @PostMapping("/editrole")
