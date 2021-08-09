@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,7 @@ public class UpmsRoleTController {
     UpmsRoleTService upmsRoleTService;
 
     // 增
+    @PreAuthorize("hasAuthority('新增角色')")
     @PostMapping(value = "/addrole")
     public ResultData addRole(
             @ApiParam(name = "upmsRoleT",value = "角色信息",required = true)
@@ -59,6 +61,7 @@ public class UpmsRoleTController {
 
 
     // 删
+    @PreAuthorize("hasAuthority('删除角色')")
     @DeleteMapping(value = "/delroles")
     public ResultData delRoles(@ApiParam(name = "ids",value = "角色id",required = true)
                                   @RequestBody List<String> ids){
@@ -71,6 +74,7 @@ public class UpmsRoleTController {
     }
 
     // 删
+    @PreAuthorize("hasAuthority('删除角色')")
     @DeleteMapping(value = "/delrole")
     public ResultData delRole(@ApiParam(name = "id",value = "角色id",required = true)
                               @RequestParam("id") String id){
@@ -82,6 +86,7 @@ public class UpmsRoleTController {
     }
 
     // 改
+    @PreAuthorize("hasAuthority('修改角色')")
     @PostMapping("/editrole")
     public ResultData editRole(
             @RequestBody UpmsRoleT upmsRoleT){
@@ -106,6 +111,7 @@ public class UpmsRoleTController {
 
 
     // 查
+    @PreAuthorize("hasAuthority('查询角色')")
     @PostMapping("/findrole")
     public ResultData findRole(
             @ApiParam(name = "current",value = "页码",required = true)
@@ -145,7 +151,7 @@ public class UpmsRoleTController {
         return ResultData.success(records,String.valueOf(total));
 
     }
-
+    @PreAuthorize("hasAuthority('查询角色')")
     @GetMapping("/rolelist")
     public ResultData roleList(
             @ApiParam(name = "current",value = "页码",required = true)

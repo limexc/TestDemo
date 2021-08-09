@@ -1,10 +1,12 @@
 package cn.limexc.sie.handler;
 
 import cn.limexc.sie.entity.UpmsUserT;
+import cn.limexc.sie.security.TokenManager;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
+    private TokenManager tokenManager;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //拦截所有根请求判断是否登录

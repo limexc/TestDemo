@@ -45,6 +45,13 @@ public class GlobaExceptionHandler {
         return ResultData.fail(ResponseCode.ERROR.val(), "数据格式错误");
     }
 
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    @ResponseBody
+    public ResultData error(org.springframework.security.access.AccessDeniedException e){
+        e.printStackTrace();
+        return  ResultData.fail(ResponseCode.ERROR.val(), "你没有权限操作该模块");
+    }
+
     @ExceptionHandler(UserException.class)
     @ResponseBody
     public ResultData error(UserException e){

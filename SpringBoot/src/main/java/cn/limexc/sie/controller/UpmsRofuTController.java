@@ -10,6 +10,7 @@ import cn.limexc.sie.service.UpmsRofuTService;
 import cn.limexc.sie.util.ResultData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -39,6 +40,7 @@ public class UpmsRofuTController {
      * @param upmsRofuT 传入包含uid与rid的对象
      * @return  格式化后数据
      */
+    @PreAuthorize("hasAuthority('修改用户')")
     @PostMapping("/addrofu")
     public ResultData addRofu(@RequestBody UpmsRofuT upmsRofuT){
         boolean isAdd =false;
@@ -54,6 +56,7 @@ public class UpmsRofuTController {
      * @param id  rofu中的id属性
      * @return    格式化数据
      */
+    @PreAuthorize("hasAuthority('修改用户')")
     @DeleteMapping("/delrofu")
     public ResultData delRofu(@RequestParam("id") int id){
         boolean isdel =false;
@@ -67,6 +70,7 @@ public class UpmsRofuTController {
      * @param rofu  rofu对象
      * @return      是否
      */
+    @PreAuthorize("hasAuthority('修改用户')")
     @PostMapping("/editrofu")
     public ResultData editRofu(@RequestBody UpmsRofuT rofu){
         boolean isEdit = upmsRofuTService.updateById(rofu);
@@ -81,6 +85,7 @@ public class UpmsRofuTController {
      * 若数据库多余  ==>删除
      * @return
      */
+    @PreAuthorize("hasAuthority('修改用户')")
     @PostMapping("/editrofus")
     public ResultData editRofus(@RequestBody UpmsRofuVo userRoleVo){
         log.info(userRoleVo.toString());
@@ -96,6 +101,7 @@ public class UpmsRofuTController {
      * @param uid  用户id
      * @return     格式化对象
      */
+    @PreAuthorize("hasAnyAuthority('查找用户','新增用户','查找角色')")
     @GetMapping("/findrofu")
     public ResultData findUserRole(@RequestParam("uid") String uid){
         if ("undefined".equals(uid)){

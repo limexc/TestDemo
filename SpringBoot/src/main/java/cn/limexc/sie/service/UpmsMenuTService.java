@@ -25,6 +25,7 @@ public interface UpmsMenuTService extends IService<UpmsMenuT> {
     List<UpmsMenuT> queryAllMenu();
 
     List<String> selectMenuValueByUserId(String id);
+    List<String> selectMenuValueByUserAlias(String userAlias);
 
     List<JSONObject> selectMenuByUserId(Integer userId);
 }

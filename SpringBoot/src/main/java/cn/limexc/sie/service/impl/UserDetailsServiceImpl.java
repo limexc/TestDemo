@@ -52,6 +52,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 判断用户是否存在
         if (null == user){
             //throw new UsernameNotFoundException("用户名不存在！");
+        }else if ("Del".equals(user.getUserStatus())){
+            throw new UsernameNotFoundException("用户被禁用！");
         }
 
         // 返回UserDetails实现类

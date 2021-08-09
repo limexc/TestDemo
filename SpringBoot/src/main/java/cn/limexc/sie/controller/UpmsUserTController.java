@@ -2,6 +2,7 @@ package cn.limexc.sie.controller;
 
 
 import cn.hutool.crypto.SecureUtil;
+import cn.limexc.sie.entity.Authority;
 import cn.limexc.sie.entity.UpmsUserT;
 import cn.limexc.sie.entity.vo.UpmsUserTQuery;
 import cn.limexc.sie.service.UpmsUserTService;
@@ -13,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import java.util.Date;
@@ -42,6 +44,7 @@ public class UpmsUserTController {
      * @return        格式化后json数据
      */
     @ApiOperation("用户分页多条件查询")
+    @PreAuthorize("hasAuthority('查询用户')")
     @PostMapping("/finduser")
     public ResultData pageUserCondition(
             @ApiParam(name = "current",value = "页码",required = true)
@@ -96,6 +99,7 @@ public class UpmsUserTController {
      * @param upmsUserT  用户
      * @return               格式化数据
      */
+    @PreAuthorize("hasAuthority('新增用户')")
     @ApiOperation("添加用户")
     @PostMapping("/adduser")
     public ResultData addUser(
@@ -132,6 +136,7 @@ public class UpmsUserTController {
      * @param id  用户id
      * @return    格式化数据信息
      */
+    @PreAuthorize("hasAuthority('查询用户')")
     @GetMapping("/getuser")
     public ResultData getUser(@RequestParam("id") String id){
         UpmsUserT user = null;
@@ -142,6 +147,7 @@ public class UpmsUserTController {
         return ResultData.fail(ResponseCode.ERROR.val(), "未查询到该用户信息");
     }
 
+    @PreAuthorize("hasAuthority('编辑用户')")
     @PostMapping("/edituser")
     public ResultData editUser(@RequestBody UpmsUserT upmsUserT){
         boolean change = false;
@@ -180,6 +186,7 @@ public class UpmsUserTController {
      * @param ids      用户id
      * @return        返回格式化数据
      */
+    @PreAuthorize("hasAuthority('删除用户')")
     @ApiOperation("删除用户 逻辑删除")
     @DeleteMapping("/delusers")
     public ResultData removeUsers(
@@ -195,6 +202,7 @@ public class UpmsUserTController {
         }
     }
 
+    @PreAuthorize("hasAuthority('删除用户')")
     @ApiOperation("删除用户 逻辑删除")
     @DeleteMapping("/deluser")
     public ResultData removeUser(

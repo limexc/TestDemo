@@ -14,6 +14,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +41,7 @@ public class UpmsMenuTController {
     private UpmsRoahTService upmsRoahTService;
 
     // 增
+    @PreAuthorize("hasAuthority('新增菜单')")
     @PostMapping("/addmenu")
     public ResultData addMenu(@RequestBody UpmsMenuT upmsMenuT){
         //拿到数据对内容进行格式校验
@@ -60,6 +63,7 @@ public class UpmsMenuTController {
      * @param ids  id列表
      * @return
      */
+    @PreAuthorize("hasAuthority('删除菜单')")
     @DeleteMapping("/delmenu")
     public ResultData delMenus(@RequestParam(value = "ids") String ids){
 
@@ -84,6 +88,7 @@ public class UpmsMenuTController {
 
 
     // 改
+    @PreAuthorize("hasAuthority('修改菜单')")
     @PostMapping("/editmenu")
     public ResultData editMenu(@RequestBody UpmsMenuT upmsMenuT){
         boolean change = false;
@@ -100,7 +105,7 @@ public class UpmsMenuTController {
         }
     }
 
-
+    @PreAuthorize("hasAuthority('查询菜单')")
     @GetMapping("/uppermenu")
     public ResultData listUpperMenu(){
         //需要向前端返回所有二级以上菜单与目录的名称及id
@@ -128,6 +133,7 @@ public class UpmsMenuTController {
 
 
     // 查  全部与条件
+    @PreAuthorize("hasAuthority('查询菜单')")
     @PostMapping("/findmenu")
     public ResultData pageMenuCondition(
             @ApiParam(name = "current",value = "页码",required = true)
@@ -179,6 +185,7 @@ public class UpmsMenuTController {
         return ResultData.success(list);
     }
 */
+    @PreAuthorize("hasAuthority('查询菜单')")
     @GetMapping("/getmenutree")
     public ResultData getTreeMenu(){
         List<UpmsMenuT> list = upmsMenuTService.queryAllMenu();
@@ -186,6 +193,7 @@ public class UpmsMenuTController {
         return ResultData.success(list);
     }
 
+    @PreAuthorize("hasAuthority('查询菜单')")
     @GetMapping("/menutreeofid")
     public ResultData getIdTreeMenu(@RequestParam("id") String id){
         List<UpmsMenuT> list = upmsMenuTService.queryAllMenu();

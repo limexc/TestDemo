@@ -5,6 +5,7 @@ import cn.limexc.sie.entity.vo.UpmsRoahTVo;
 import cn.limexc.sie.service.UpmsRoahTService;
 import cn.limexc.sie.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -30,6 +31,7 @@ public class UpmsRoahTController {
      * @param roahTVO    角色id 与 权限Id List
      * @return          添加状态
      */
+    @PreAuthorize("hasAuthority('修改角色')")
     @PostMapping("/addroah")
     public ResultData addRoah(
             @RequestBody UpmsRoahTVo roahTVO){
@@ -49,6 +51,7 @@ public class UpmsRoahTController {
      * @param roahTVO  角色id 与 权限Id List
      * @return         状态
      */
+    @PreAuthorize("hasAuthority('修改角色')")
     @PostMapping("/editroah")
     public ResultData editRoah(@RequestBody UpmsRoahTVo roahTVO){
         boolean isEdit = roahTService.editRoleAuth(roahTVO);

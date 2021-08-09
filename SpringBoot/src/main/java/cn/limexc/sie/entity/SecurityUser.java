@@ -27,6 +27,9 @@ public class SecurityUser implements UserDetails {
     //当前登录用户
     private transient UpmsUserT currentUserInfo;
 
+    //用户状态
+    private String status;
+
     //当前权限
     private List<String> menuValueList;
 
@@ -36,6 +39,7 @@ public class SecurityUser implements UserDetails {
     public SecurityUser(UpmsUserT user) {
         if (user != null) {
             this.currentUserInfo = user;
+            this.status = user.getUserStatus();
         }
     }
 

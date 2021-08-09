@@ -9,8 +9,10 @@ import cn.limexc.sie.security.TokenManager;
 import cn.limexc.sie.security.UnauthorizedEntryPoint;
 import io.swagger.models.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -33,7 +35,7 @@ import org.springframework.web.cors.CorsUtils;
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)// 控制权限注解
 public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     //数据库返回 自定义
@@ -114,6 +116,12 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/v2/**",
                 "/swagger-ui.html/**"
                );
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
 }

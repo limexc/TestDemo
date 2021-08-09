@@ -21,10 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Permission;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>
@@ -92,15 +89,36 @@ public class UpmsMenuTServiceImpl extends ServiceImpl<UpmsMenuTMapper, UpmsMenuT
     }
     //=====================================================================\\
 
+
+    @Override
+    public List<String> selectMenuValueByUserAlias(String userAlias) {
+        List<String> selectPermissionValueList = new ArrayList<>();
+        selectPermissionValueList = getMenuValue("",userAlias);
+        return selectPermissionValueList;
+    }
+
     //根据用户id获取用户菜单
     @Override
     public List<String> selectMenuValueByUserId(String id) {
 
         List<String> selectPermissionValueList = new ArrayList<>();
-        if(this.isSysAdmin(id)) {
+        selectPermissionValueList = getMenuValue(id,"");
+        return selectPermissionValueList;
+    }
+
+    private List<String> getMenuValue(String id, String userAlias) {
+        List<String> selectPermissionValueList = new ArrayList<>();
+        //判断传入的值是什么
+        if (!"".equals(userAlias)) {
+            //通过userAlias查id
+            UpmsUserT userT = userTService.selectByUserAlias(userAlias);
+            id=String.valueOf(userT.getUserId());
+        }
+
+        if (this.isSysAdmin(id)) {
             //如果是系统管理员，获取所有权限  即所有菜单名称
-            List<UpmsMenuT> menuTList =baseMapper.selectList(new QueryWrapper<UpmsMenuT>().select("MENU_NAME"));
-            for (UpmsMenuT menuT :menuTList){
+            List<UpmsMenuT> menuTList = baseMapper.selectList(new QueryWrapper<UpmsMenuT>().select("MENU_NAME"));
+            for (UpmsMenuT menuT : menuTList) {
                 selectPermissionValueList.add(menuT.getMenuName());
             }
         } else {
@@ -109,31 +127,32 @@ public class UpmsMenuTServiceImpl extends ServiceImpl<UpmsMenuTMapper, UpmsMenuT
 
             //通过角色查询全部包含的 权限(菜单)名称 使用set去重
             //获取角色的id列表
-            List<Integer> roleIds=new ArrayList<>();
-            if (roleTList.size()>0){
-                for (UpmsRoleT roleT :roleTList){
+            List<Integer> roleIds = new ArrayList<>();
+            if (roleTList.size() > 0) {
+                for (UpmsRoleT roleT : roleTList) {
                     roleIds.add(roleT.getRoleId());
                 }
             }
             //通过角色id查询 角色权限列表
-            List<UpmsRoahT> roahList = roahTService.list(new QueryWrapper<UpmsRoahT>().in("ROAH_ROLEID",roleIds));
+            List<UpmsRoahT> roahList = roahTService.list(new QueryWrapper<UpmsRoahT>().in("ROAH_ROLEID", roleIds));
             //List<UpmsRoahT> roahList = roahTService.listByIds(roleIds);
             //通过id查询全部菜单
             Set<String> menuSetIds = new HashSet<>();
-            for (UpmsRoahT roahT:roahList){
+            for (UpmsRoahT roahT : roahList) {
                 menuSetIds.add(String.valueOf(roahT.getRoahMenuid()));
             }
             List<UpmsMenuT> menuTList = menuTMapper.selectBatchIds(menuSetIds);
 
-            if (menuTList.size()>0){
-                for (int i=0;i<menuTList.size();i++){
-                    log.info("该用户可以访问的菜单名称:"+menuTList.get(i).getMenuName());
+            if (menuTList.size() > 0) {
+                for (int i = 0; i < menuTList.size(); i++) {
+                    log.info("该用户可以访问的菜单名称:" + menuTList.get(i).getMenuName());
                     selectPermissionValueList.add(menuTList.get(i).getMenuName());
                 }
             }
 
 
         }
+
         return selectPermissionValueList;
     }
 
