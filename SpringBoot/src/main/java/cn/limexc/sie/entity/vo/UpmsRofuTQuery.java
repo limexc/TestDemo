@@ -2,11 +2,7 @@ package cn.limexc.sie.entity.vo;
 
 import cn.limexc.sie.entity.UpmsRofuT;
 import cn.limexc.sie.entity.UpmsRoleT;
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
-import org.apache.ibatis.type.JdbcType;
-
-import java.util.Date;
 
 /**
  * @Description [类说明]

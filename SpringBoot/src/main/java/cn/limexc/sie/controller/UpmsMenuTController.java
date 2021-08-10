@@ -14,7 +14,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -196,6 +195,10 @@ public class UpmsMenuTController {
     @PreAuthorize("hasAuthority('查询菜单')")
     @GetMapping("/menutreeofid")
     public ResultData getIdTreeMenu(@RequestParam("id") String id){
+        //这是新增
+        if ("".equals(id)||"undefined".equals(id)){
+            return ResultData.success(true);
+        }
         List<UpmsMenuT> list = upmsMenuTService.queryAllMenu();
         //需要将与id匹配的menu传回,通过msg吧,开始设计的时候不太好,没时间改了
         //通过角色id获取

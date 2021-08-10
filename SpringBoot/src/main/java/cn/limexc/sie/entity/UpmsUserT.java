@@ -1,19 +1,12 @@
 package cn.limexc.sie.entity;
 
-import java.util.Date;
-
-import java.io.Serializable;
-
-import cn.limexc.sie.handler.AutoUpdateHandler;
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import oracle.sql.DATE;
-import oracle.sql.NUMBER;
 import org.apache.ibatis.type.JdbcType;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -89,4 +82,21 @@ public class UpmsUserT extends BaseEntity {//Model<UpmsUserT>
         return this.userId;
     }
 
+    @Override
+    public String toString() {
+        return "UpmsUserT{" +
+                "userId=" + userId +
+                ", userAlias='" + userAlias + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPasswd='" + userPasswd + '\'' +
+                ", userTel='" + userTel + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", userGender='" + userGender + '\'' +
+                ", userStatus='" + userStatus + '\'' +
+                ", userNote='" + userNote + '\'' +
+                ", userBack1='" + userBack1 + '\'' +
+                ", userBack2='" + userBack2 + '\'' +
+                ", userBack3='" + userBack3 + '\'' +
+                '}';
+    }
 }

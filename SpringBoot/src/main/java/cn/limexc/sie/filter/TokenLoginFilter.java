@@ -8,7 +8,6 @@ import cn.limexc.sie.util.ResponseUtil;
 import cn.limexc.sie.util.ResultData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -66,10 +65,8 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
             throws AuthenticationException {
-
         try {
             UpmsUserT user = new ObjectMapper().readValue(req.getInputStream(), UpmsUserT.class);
-
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserAlias(),
                     user.getUserPasswd(), new ArrayList<>()));
         } catch (IOException e) {

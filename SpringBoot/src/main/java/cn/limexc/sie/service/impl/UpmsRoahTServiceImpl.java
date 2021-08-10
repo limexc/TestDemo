@@ -7,8 +7,10 @@ import cn.limexc.sie.service.UpmsMenuTService;
 import cn.limexc.sie.service.UpmsRoahTService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
  * @author 贤致源
  * @since 2021-07-27
  */
+@Slf4j
 @Service
 public class UpmsRoahTServiceImpl extends ServiceImpl<UpmsRoahTMapper, UpmsRoahT> implements UpmsRoahTService {
     @Autowired
@@ -40,13 +43,14 @@ public class UpmsRoahTServiceImpl extends ServiceImpl<UpmsRoahTMapper, UpmsRoahT
     }
 
     @Override
+    @Transactional
     public boolean editRoleAuth(UpmsRoahTVo roahTVO) {
         //要包含从某个角色中删除权限，即前端用户取消勾选某一权限。
         //如果之前已经存在不修改，若不存在就插入，若List中不存在就删除
         //获得当前角色已经勾选的权限，对比list
         //在提交时判断是插入还是删除？应该可以和新增进行合并，使用该接口即可。
         int rows = 0;
-
+        //log.info(roahTVO.toString());
         QueryWrapper<UpmsRoahT> wrapper = new QueryWrapper<>();
         wrapper.eq("ROAH_ROLEID",roahTVO.getRoleId());
         List<UpmsRoahT> roahList = baseMapper.selectList(wrapper);
@@ -70,25 +74,49 @@ public class UpmsRoahTServiceImpl extends ServiceImpl<UpmsRoahTMapper, UpmsRoahT
                 }
             }
         }
-        System.out.println("------要删除的数据------");
-        for (String a:oldRoahList) {
-            System.out.print(a+" ");
-        }
-        System.out.println();
+        QueryWrapper<UpmsRoahT> delRoleAuth = new QueryWrapper<UpmsRoahT>();
+        delRoleAuth.eq("ROAH_ROLEID",roahTVO.getRoleId());
+        delRoleAuth.in("ROAH_MENUID",oldRoahList);
+
+        log.info("角色权限要删除的数据------"+oldRoahList.toString());
+
         if (oldRoahList.size()!=0){
-            rows = roahTMapper.updateRoahList(roahTVO.getRoleId(),oldRoahList);
+            rows = roahTMapper.delete(delRoleAuth);
         }
-
-        System.out.println("------要增加的数据------");
-        for (String b:newRoahList) {
-            System.out.print(b+" ");
-        }
-        System.out.println();
-
+        log.info("角色权限要增加的数据------"+newRoahList.toString());
 
         if (newRoahList.size()!=0){
-            rows = roahTMapper.insertRoahList(roahTVO.getRoleId(),newRoahList);
+            UpmsRoahT roahT = new UpmsRoahT();
+            for (int i=0;i<newRoahList.size();i++){
+                //需要传入rofu实体类对象
+                roahT.setRoahRoleid(Integer.parseInt(roahTVO.getRoleId()));
+                roahT.setRoahMenuid(Integer.parseInt(newRoahList.get(i)));
+                rows += roahTMapper.insert(roahT);
+            }
         }
+        /**
+
+         QueryWrapper<UpmsRofuT> delUserRole = new QueryWrapper<UpmsRofuT>();
+         delUserRole.eq("ROFU_USERID",userRoleVo.getUserId());
+         delUserRole.in("ROFU_ROLEID",oldRofuList);
+
+         if (oldRofuList.size()!=0){
+         rows = rofuTMapper.delete(delUserRole);
+         }
+
+         log.info("要增加的数据==>{}", Arrays.toString(newRofuList.toArray()));
+
+         if (newRofuList.size()!=0){
+         UpmsRofuT rofuT = new UpmsRofuT();
+         for (int i=0;i<newRofuList.size();i++){
+         //需要传入rofu实体类对象
+         rofuT.setRofuUserid(Integer.parseInt(userRoleVo.getUserId()));
+         rofuT.setRofuRoleid(Integer.parseInt(newRofuList.get(i)));
+         rows += rofuTMapper.insert(rofuT);
+         }
+         }
+
+         */
         if (rows!=0){
             return true;
         }

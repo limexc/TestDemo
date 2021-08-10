@@ -2,8 +2,8 @@ package cn.limexc.sie.controller;
 
 
 import cn.hutool.crypto.SecureUtil;
-import cn.limexc.sie.entity.Authority;
 import cn.limexc.sie.entity.UpmsUserT;
+import cn.limexc.sie.entity.vo.AddUserVo;
 import cn.limexc.sie.entity.vo.UpmsUserTQuery;
 import cn.limexc.sie.service.UpmsUserTService;
 import cn.limexc.sie.util.ResponseCode;
@@ -13,10 +13,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +30,7 @@ import java.util.List;
  * @author 贤致源
  * @since 2021-07-27
  */
+@Slf4j
 @Api("用户管理")
 @RestController
 @RequestMapping("/sys/user")
@@ -96,30 +99,40 @@ public class UpmsUserTController {
 
     /**
      * 添加用户功能
-     * @param upmsUserT  用户
+     * @param addUserVo  用户
      * @return               格式化数据
      */
     @PreAuthorize("hasAuthority('新增用户')")
     @ApiOperation("添加用户")
     @PostMapping("/adduser")
     public ResultData addUser(
-            @ApiParam(name = "UpmsUserT",value = "用户信息",required = true)
-            @RequestBody UpmsUserT upmsUserT){
-
+            @ApiParam(name = "AddUserVo",value = "用户信息",required = true)
+            @RequestBody AddUserVo addUserVo){
+        UpmsUserT user = new UpmsUserT();
+        user.setUserName(addUserVo.getUserName());
+        user.setUserAlias(addUserVo.getUserAlias());
+        user.setUserEmail(addUserVo.getUserEmail());
+        user.setUserStatus(addUserVo.getUserStatus());
+        user.setUserNote(addUserVo.getUserNote());
+        user.setUserTel(addUserVo.getUserTel());
         boolean save = false;
         try {
             //用来判断传入的数据是否符合要求
-            if (upmsUserT!=null){
-
-                if (upmsUserT.getUserPasswd()!=""){
-                    upmsUserT.setUserPasswd(
-                            //用户密码加密存储
-                            SecureUtil.md5(upmsUserT.getUserPasswd())
+            if (addUserVo!=null){
+                if (addUserVo.getUserPasswd1()!=""
+                        &&(addUserVo.getUserPasswd1()).equals(addUserVo.getUserPasswd2())){
+                    addUserVo.setUserPasswd1(
+                        //用户密码加密存储
+                        SecureUtil.md5(addUserVo.getUserPasswd1())
                     );
+                    user.setUserPasswd(addUserVo.getUserPasswd1());
+                }else {
+                    return ResultData.fail(ResponseCode.ERROR.val(),"密码不能为空");
                 }
 
             }
-            save = upmsUserTService.save(upmsUserT);
+            log.info(user.toString());
+            save = upmsUserTService.save(user);
             if (save){
                 return ResultData.success(save);
             }

@@ -15,5 +15,14 @@ import java.util.List;
 public class UpmsRoahTVo {
     boolean isSelectd=false;
     String roleId;
-    List<String> AuthIds;
+    List<String> authIds;
+
+    @Override
+    public String toString() {
+        return "UpmsRoahTVo{" +
+                "isSelectd=" + isSelectd +
+                ", roleId='" + roleId + '\'' +
+                ", AuthIds=" + authIds +
+                '}';
+    }
 }
