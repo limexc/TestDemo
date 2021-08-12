@@ -17,8 +17,8 @@ import java.util.List;
  * 相关实体类
  * </p>
  *
- * @author qy
- * @since 2019-11-08
+ * @author 贤致源
+ * @since 2021-08-08
  */
 @Data
 @Slf4j

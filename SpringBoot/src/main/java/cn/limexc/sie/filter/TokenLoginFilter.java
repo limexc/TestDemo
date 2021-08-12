@@ -32,8 +32,8 @@ import java.util.Map;
  * 认证过滤
  * </p>
  *
- * @author qy
- * @since 2019-11-08
+ * @author 贤致源
+ * @since 2021-08-08
  */
 @Slf4j
 public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
@@ -92,9 +92,8 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         redisTemplate.opsForValue().set(user.getCurrentUserInfo().getUserAlias(), user.getMenuValueList());
         Map map = new HashMap<>();
         map.put("token",token);
-        log.info("token: "+token);
+        log.info("token: {}",token);
         ResponseUtil.out(res, ResultData.success(map));
-        //ResponseUtil.out(res, R.ok().data("token", token));
     }
 
     /**

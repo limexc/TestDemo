@@ -57,6 +57,7 @@
 
 <script>
 import DialogComponent from "@/components/Test/dialogComponent"
+
 export default {
   name: "DialogDemo",
   components: { DialogComponent },

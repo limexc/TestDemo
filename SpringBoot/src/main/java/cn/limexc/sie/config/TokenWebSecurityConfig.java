@@ -7,13 +7,11 @@ import cn.limexc.sie.security.DefaultPasswordEncoder;
 import cn.limexc.sie.security.TokenLogoutHandler;
 import cn.limexc.sie.security.TokenManager;
 import cn.limexc.sie.security.UnauthorizedEntryPoint;
-import io.swagger.models.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,8 +19,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.web.cors.CorsUtils;
 
 
 /**
@@ -30,7 +26,7 @@ import org.springframework.web.cors.CorsUtils;
  * Security核心配置类
  * </p>
  *
- * @author qy
+ * @author 贤致源
  * @since 2019-11-18
  */
 @Configuration

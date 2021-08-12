@@ -35,8 +35,8 @@ public class GlobaExceptionHandler {
      * 特定异常捕获处理
      * ExceptionHandler() 指定出现了什么异常执行这个方法
      * ResponseBody        返回数据
-     * @param
-     * @return   格式化返回数据
+     * @param e  数据格式错误
+     * @return   格式化返回前端数据
      */
     @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
     @ResponseBody

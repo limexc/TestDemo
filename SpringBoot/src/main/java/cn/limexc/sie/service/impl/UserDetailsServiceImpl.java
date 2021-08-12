@@ -4,13 +4,13 @@ package cn.limexc.sie.service.impl;
 import cn.limexc.sie.entity.*;
 import cn.limexc.sie.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.swagger.models.auth.In;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,8 +22,8 @@ import java.util.Set;
  * 自定义userDetailsService - 认证用户详情
  * </p>
  *
- * @author qy
- * @since 2019-11-08
+ * @author 贤致源
+ * @since 2021-08-08
  */
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {

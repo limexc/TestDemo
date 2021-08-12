@@ -113,6 +113,7 @@ public class UpmsUserTController {
         user.setUserAlias(addUserVo.getUserAlias());
         user.setUserEmail(addUserVo.getUserEmail());
         user.setUserStatus(addUserVo.getUserStatus());
+        user.setUserGender(addUserVo.getUserGender());
         user.setUserNote(addUserVo.getUserNote());
         user.setUserTel(addUserVo.getUserTel());
         boolean save = false;

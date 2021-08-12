@@ -87,7 +87,6 @@ pagehelper:
   row-bounds-with-count: true
   properties: properties
   page-size-zero: true
-#好像不能用？
 logging:
   level:
     com.baomidou.samples.metainfo: debug

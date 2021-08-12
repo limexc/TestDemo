@@ -1,7 +1,6 @@
 package cn.limexc.sie.config;
 
 
-import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.incrementer.OracleKeyGenerator;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.mybatis.spring.annotation.MapperScan;

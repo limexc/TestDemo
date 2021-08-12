@@ -15,14 +15,14 @@ import java.util.Date;
  * token操作工具类
  * </p>
  *
- * @author qy
- * @since 2019-11-08
+ * @author 贤致源
+ * @since 2021-08-08
  */
 @Slf4j
 @Component
 public class TokenManager {
 
-    private long tokenExpiration = 24*60*60*1000;
+    private long tokenExpiration = 30*60*1000;
     private String tokenSignKey = "zhiyuan";
 
     public String createToken(String userAlias) {

@@ -145,7 +145,7 @@ public class UpmsMenuTController {
         Page<UpmsMenuT> menuTPage = new Page<UpmsMenuT>(current,limit);
         //构建条件
         QueryWrapper<UpmsMenuT> wrapper = new QueryWrapper<UpmsMenuT>();
-        log.info("菜单查询条件为:"+upmsMenuTQuery.toString());
+        log.info("菜单查询条件为:{}",upmsMenuTQuery.toString());
         //多条件组合查询
         String menuName = upmsMenuTQuery.getMenuName();
         String menuType = upmsMenuTQuery.getMenuType();

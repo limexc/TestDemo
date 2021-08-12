@@ -36,7 +36,7 @@
       <el-form-item label="电话">
         <el-input  v-model="userInfo.userTel" type="number"  placeholder="输入电话,非必填"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱" prop="userEmail">
+      <el-form-item label="邮箱">
         <el-input  v-model="userInfo.userEmail"  type="email" placeholder="输入邮箱,非必填"></el-input>
       </el-form-item>
 

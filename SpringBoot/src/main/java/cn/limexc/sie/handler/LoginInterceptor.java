@@ -1,21 +1,15 @@
 package cn.limexc.sie.handler;
 
-import cn.limexc.sie.entity.UpmsUserT;
 import cn.limexc.sie.security.TokenManager;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * @Description [类说明]
+ * @Description 弃用,删掉就可以.不会影响任何功能.
  * @Version 0.0.1
  * @Email zhiyuanxzy@gmail.com
  * @Author 贤致源
@@ -34,7 +28,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         //HttpSession session = request.getSession();
         //UpmsUserT sysUser = (UpmsUserT) session.getAttribute("sysUser");
 
-        log.info("访问的URI是："+uri);
+        log.info("访问的URI是：{}",uri);
 
         return true;
 

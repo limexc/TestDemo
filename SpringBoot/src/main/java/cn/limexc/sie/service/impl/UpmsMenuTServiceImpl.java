@@ -1,12 +1,10 @@
 package cn.limexc.sie.service.impl;
 
-import cn.limexc.sie.entity.*;
-import cn.limexc.sie.entity.subject.FunSub;
-import cn.limexc.sie.entity.subject.IndexSub;
-import cn.limexc.sie.entity.subject.MenuSub;
+import cn.limexc.sie.entity.UpmsMenuT;
+import cn.limexc.sie.entity.UpmsRoahT;
+import cn.limexc.sie.entity.UpmsRoleT;
+import cn.limexc.sie.entity.UpmsUserT;
 import cn.limexc.sie.mapper.UpmsMenuTMapper;
-
-
 import cn.limexc.sie.service.UpmsMenuTService;
 import cn.limexc.sie.service.UpmsRoahTService;
 import cn.limexc.sie.service.UpmsRoleTService;
@@ -14,14 +12,14 @@ import cn.limexc.sie.service.UpmsUserTService;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.sun.javafx.tk.PermissionHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.Permission;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -145,11 +143,13 @@ public class UpmsMenuTServiceImpl extends ServiceImpl<UpmsMenuTMapper, UpmsMenuT
 
             if (menuTList.size() > 0) {
                 for (int i = 0; i < menuTList.size(); i++) {
-                    log.info("该用户可以访问的菜单名称:" + menuTList.get(i).getMenuName());
-                    selectPermissionValueList.add(menuTList.get(i).getMenuName());
+                    //通过判断字段内容
+                    if ("Act".equals(menuTList.get(i).getMenuStatus())){
+                        log.info("该用户可以访问的菜单名称:{}",menuTList.get(i).getMenuName());
+                        selectPermissionValueList.add(menuTList.get(i).getMenuName());
+                    }
                 }
             }
-
 
         }
 

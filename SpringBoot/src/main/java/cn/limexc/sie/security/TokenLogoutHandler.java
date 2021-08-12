@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  * 退出处理器
  * </p>
  *
- * @author qy
- * @since 2019-11-08
+ * @author 贤致源
+ * @since 2021-08-08
  */
 public class TokenLogoutHandler implements LogoutHandler {
 
@@ -34,7 +34,6 @@ public class TokenLogoutHandler implements LogoutHandler {
         String token = request.getHeader("token");
         if (token != null) {
             tokenManager.removeToken(token);
-
             //清空当前用户缓存中的权限数据
             String userName = tokenManager.getUserFromToken(token);
             redisTemplate.delete(userName);

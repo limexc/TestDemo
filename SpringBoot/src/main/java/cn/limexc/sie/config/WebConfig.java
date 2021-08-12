@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Web配置类
+ * 可以弃用,暂时未删除
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {

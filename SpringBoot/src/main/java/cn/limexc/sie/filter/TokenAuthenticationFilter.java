@@ -29,8 +29,8 @@ import java.util.List;
  * 访问过滤器 授权过滤
  * </p>
  *
- * @author qy
- * @since 2019-11-08
+ * @author 贤致源
+ * @since 2021-08-08
  */
 @Slf4j
 public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
@@ -54,7 +54,7 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
 
         UsernamePasswordAuthenticationToken authentication = null;
         try {
-            log.info("getAuthentication: "+req.getHeader("token"));
+            log.info("getAuthentication: {}",req.getHeader("token"));
             authentication = getAuthentication(req);
         } catch (Exception e) {
             ResponseUtil.out(res, ResultData.fail(ResponseCode.ERROR.val(), "错误,token"));
@@ -71,7 +71,7 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         // token置于header里
         String token = request.getHeader("token");
-        log.info("在getAuthentication中,getHeader(`token`): "+request.getHeader("token"));
+        log.info("在getAuthentication中,getHeader(`token`): {}",request.getHeader("token"));
         if (token != null && !"".equals(token.trim())) {
             String userAlias = tokenManager.getUserFromToken(token);
 

@@ -1,6 +1,5 @@
 package cn.limexc.sie.service.impl;
 
-import cn.limexc.sie.entity.UpmsRoahT;
 import cn.limexc.sie.entity.UpmsRofuT;
 import cn.limexc.sie.entity.UpmsRoleT;
 import cn.limexc.sie.mapper.UpmsRoleTMapper;
@@ -12,11 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.ws.soap.Addressing;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
@@ -41,7 +37,7 @@ public class UpmsRoleTServiceImpl extends ServiceImpl<UpmsRoleTMapper, UpmsRoleT
         QueryWrapper<UpmsRofuT> rofuTQueryWrapper = new QueryWrapper<UpmsRofuT>();
         rofuTQueryWrapper.eq("ROFU_USERID",uid);
         List<UpmsRofuT> rofuTList = rofuTService.list(rofuTQueryWrapper);
-        log.info("该用户具有:"+rofuTList.size()+"种角色.");
+        log.info("该用户具有:{}种角色.",rofuTList.size());
         //获得角色id进行对角色的查询
         List<String> roleIds = new ArrayList<String>();
         if (rofuTList.size()>0){
@@ -49,7 +45,12 @@ public class UpmsRoleTServiceImpl extends ServiceImpl<UpmsRoleTMapper, UpmsRoleT
                 roleIds.add(String.valueOf(rofu.getRofuRoleid()));
             }
         }
-        List<UpmsRoleT> roleTList = roleTMapper.selectBatchIds(roleIds);
+        QueryWrapper<UpmsRoleT> roleQueryWrapper = new QueryWrapper<UpmsRoleT>();
+        roleQueryWrapper.eq("ROLE_STATUS","Act");
+        roleQueryWrapper.in("ROLE_ID",roleIds);
+        //通过判读status字段来决定是否有效,是否将该角色放到集合中
+        List<UpmsRoleT> roleTList = roleTMapper.selectList(roleQueryWrapper);
+        //roleTMapper.selectBatchIds(roleIds);
 
         return roleTList;
     }

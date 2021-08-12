@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
  * 密码的处理方法类型
  * </p>
  *
- * @author qy
- * @since 2019-11-08
+ * @author 贤致源
+ * @since 2021-08-08
  */
 @Component
 public class DefaultPasswordEncoder implements PasswordEncoder {
