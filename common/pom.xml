@@ -36,7 +36,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.3.2</version>
+            <version>3.5.2</version>
         </dependency>
         <!--lombok用来简化实体类：需要安装lombok插件-->
         <dependency>
@@ -48,12 +48,12 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
+            <version>3.0.0</version>
         </dependency>
         <!-- redis -->
         <dependency>
