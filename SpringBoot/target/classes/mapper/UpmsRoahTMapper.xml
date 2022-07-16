@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.limexc.sie.mapper.UpmsRoahTMapper">
+
+
+    <insert id="insertRoahList" parameterType="cn.limexc.sie.entity.vo.UpmsRoahTVo">
+        insert into UPMS_ROAH_T
+        (
+             ROAH_ID, ROAH_MENUID, ROAH_ROLEID, CREATED_BY, CREATION_DATE, LAST_UPDATED_BY,
+             LAST_UPDATED_DATE, LAST_UPDATED_LOGIN, DELETE_FLAG, DESCRIPTION
+        )
+        values
+        <foreach collection="aIds"  item="item" index="index" open="(" separator="," close=")">
+        UPMS_ROAH_S.nextval,#{item},#{rid},1,sysdate,1,sysdate,1,'N',null
+        </foreach>
+    </insert>
+
+    <update id="updateRoahList"  parameterType="cn.limexc.sie.entity.vo.UpmsRoahTVo">
+        update UPMS_ROAH_T set DELETE_FLAG = "Y" where ROAH_ROLEID=#{rid} in(
+        <foreach collection="aIds" item="item" index="index" separator=",">
+            ROAH_MENUID=#{item}
+        </foreach>
+        )
+    </update>
+</mapper>
